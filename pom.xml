@@ -14,7 +14,7 @@
         <!--Plugin Versions-->
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.22.0</maven-failsafe-plugin.version>
-        <suite>GridParallelSuite</suite>
+        <suite>DefaultSuite</suite>
     </properties>
 
     <dependencies>
