@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
+            image 'ruby:2.6.1-alpine3.8'
             args '-v /root/.m2:/root/.m2'
         }
     }
@@ -9,6 +10,11 @@ pipeline {
     stages {
         stage('Build') {
             parallel {
+
+                steps("Install bundle") {
+                    sh "gem install bundle"
+                }
+
                 stage('Run Test') {
                     // steps {
                     //     sh 'run-test.sh chrome 3'
