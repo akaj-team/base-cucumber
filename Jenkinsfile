@@ -1,48 +1,57 @@
 pipeline {
-
     agent {
         docker {
-           image 'maven:3-alpine'
-                args '-v /root/.m2:/root/.m2'
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Run validate"
+                sh 'mvn validate'
+            }
         }
     }
 
-    steps {
 
-        stage('Build Test') {
-            echo "Test abc"
-
-            parallel(
-                a: {
-                    // sh 'run-test.sh chrome 3'
-                    echo "Step A"
-                },
-                b: {
-                    sh 'mvn validate'
-                }
-            )
-        }
-    }
-
+//    agent {
+//        docker {
+//            image 'maven:3-alpine'
+//            args '-v /root/.m2:/root/.m2'
+//        }
+//    }
+//
 //    stages {
 //        stage('Build') {
-//            steps {
-//                sh 'run-test.sh chrome 3'
+//            parallel {
+//                stage('Run Test') {
+//                   // steps {
+//                   //     sh 'run-test.sh chrome 3'
+//                   // }
+//                    echo "Step A"
+//                }
+//
+//                stage('Validate convention') {
+//                    steps {
+//                        sh 'mvn validate'
+//                    }
+//                }
 //            }
 //        }
 //    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'target/**'
-            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-        }
-
-        success {
-            echo "Test succeeded"
-        }
-        failure {
-            echo "Test failed"
-        }
-    }
+//
+//    post {
+//        always {
+//            archiveArtifacts artifacts: 'target/**'
+//            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+//        }
+//
+//        success {
+//            echo "Test succeeded"
+//        }
+//        failure {
+//            echo "Test failed"
+//        }
+//    }
 }
