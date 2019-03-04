@@ -11,12 +11,12 @@ pipeline {
         stage('Install bundle') {
             steps("Install bundle") {
                 sh "gem install bundle"
+                sh "bundle install"
             }
         }
 
         stage('Install danger') {
             steps("Install danger") {
-                sh "bundle install"
                 sh "bundle update danger"
             }
         }
@@ -48,17 +48,17 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            archiveArtifacts artifacts: 'target/**'
-            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-        }
-
-        success {
-            echo "Test succeeded"
-        }
-        failure {
-            echo "Test failed"
-        }
-    }
+//    post {
+//        always {
+//            archiveArtifacts artifacts: 'target/**'
+//            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+//        }
+//
+//        success {
+//            echo "Test succeeded"
+//        }
+//        failure {
+//            echo "Test failed"
+//        }
+//    }
 }
