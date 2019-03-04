@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Install bundle') {
             steps("Install bundle") {
-                sh "gem install bundle"
+                sh "bundle install"
             }
         }
 
@@ -27,9 +27,6 @@ pipeline {
                     // steps {
                     //     sh 'run-test.sh chrome 3'
                     // }
-                    steps {
-                        echo "Step A"
-                    }
                 }
 
                 stage('Validate Code Convention') {
