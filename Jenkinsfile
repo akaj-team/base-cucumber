@@ -3,7 +3,6 @@ pipeline {
         docker {
             image 'maven:3-alpine'
             image 'ruby:2.6.1-alpine3.8'
-            args '-v /root/.m2:/root/.m2'
         }
     }
 
