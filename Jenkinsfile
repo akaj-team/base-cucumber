@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            image 'ruby:2.6.1-alpine3.8'
+            image 'ruby:2.6.0-alpine3.8'
         }
     }
 
@@ -57,6 +57,8 @@ pipeline {
                         }
 
                         success {
+                            echo "Post Convention Report"
+                            sh 'bundle exec danger'
                             echo "Test succeeded"
                         }
                         failure {
