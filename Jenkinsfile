@@ -12,7 +12,9 @@ pipeline {
             steps("Install bundle") {
                 sh "gem install bundle"
             }
+        }
 
+        stage('Install danger') {
             steps("Install danger") {
                 sh "bundle update danger"
             }
