@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Install bundle') {
             steps("Install bundle") {
-                sh "gem install bundle"
+                sh "gem install bundler && rbenv rehash"
                 sh "bundle install"
             }
         }
