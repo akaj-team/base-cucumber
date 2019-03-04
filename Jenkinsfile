@@ -14,6 +14,12 @@ pipeline {
         }
 
         stage('Install bundle') {
+            agent {
+                docker {
+                    image 'ruby:2.6.0-alpine3.8'
+                }
+            }
+
             steps("Install bundle") {
                 sh "bundle install"
             }
