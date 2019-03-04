@@ -13,7 +13,9 @@ pipeline {
                     // steps {
                     //     sh 'run-test.sh chrome 3'
                     // }
-                    echo "Step A"
+                    steps {
+                        echo "Step A"
+                    }
                 }
 
                 stage('Validate Code Convention') {
