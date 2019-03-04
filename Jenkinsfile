@@ -29,6 +29,20 @@ pipeline {
                     steps {
                         echo "Step A"
                     }
+
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'target/**'
+                            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+                        }
+
+                        success {
+                            echo "Test succeeded"
+                        }
+                        failure {
+                            echo "Test failed"
+                        }
+                    }
                 }
 
                 stage('Validate Code Convention') {
@@ -40,6 +54,13 @@ pipeline {
                         always {
                             echo "Post Convention Report"
                             sh 'bundle exec danger'
+                        }
+
+                        success {
+                            echo "Test succeeded"
+                        }
+                        failure {
+                            echo "Test failed"
                         }
                     }
                 }
