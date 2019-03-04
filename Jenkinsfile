@@ -7,16 +7,15 @@ pipeline {
     }
 
     stages {
-        stage('Install bundle') {
-            steps("Install bundle") {
+        stage('Install gem bundle') {
+            steps("Install gem bundle") {
                 sh "gem install bundler"
-
             }
         }
 
-        stage('Install danger') {
-            steps("Install danger") {
-                sh "sh bundle install"
+        stage('Install bundle') {
+            steps("Install bundle") {
+                sh "bundle install"
             }
         }
 
