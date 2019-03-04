@@ -12,6 +12,10 @@ pipeline {
             steps("Install bundle") {
                 sh "gem install bundle"
             }
+
+            steps("Install danger") {
+                sh "bundle update danger"
+            }
         }
 
         stage('Build') {
@@ -43,8 +47,8 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/**'
-            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+//            archiveArtifacts artifacts: 'target/**'
+//            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
         }
 
         success {
