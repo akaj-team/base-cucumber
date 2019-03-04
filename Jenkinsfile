@@ -16,7 +16,7 @@ pipeline {
                     echo "Step A"
                 }
 
-                stage('Validate convention') {
+                stage('Validate Code Convention') {
                     steps {
                         sh 'mvn validate'
                     }
