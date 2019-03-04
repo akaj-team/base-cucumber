@@ -10,7 +10,7 @@ pipeline {
         stage('Install bundle') {
             steps("Install bundle") {
                 sh "gem install bundler"
-                sh "bundle install"
+//                sh "bundle install"
             }
         }
 
