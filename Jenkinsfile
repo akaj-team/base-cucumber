@@ -1,17 +1,11 @@
 pipeline {
     agent {
         docker {
-            image 'ruby:2.6.0-alpine3.8'
             image 'maven:3-alpine'
         }
     }
 
     stages {
-        stage('Install gem bundle') {
-            steps("Install gem bundle") {
-                sh "gem install bundler"
-            }
-        }
 
         stage('Install bundle') {
             agent {
@@ -21,6 +15,7 @@ pipeline {
             }
 
             steps("Install bundle") {
+                sh "gem install bundler"
                 sh "bundle install"
             }
         }
