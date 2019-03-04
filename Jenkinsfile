@@ -24,18 +24,18 @@ pipeline {
                     }
                 }
             }
-        }
 
-        stage('Post Convention To Github') {
-            echo "Post Convention Report"
-            sh 'bundle exec danger'
+            stage('Post Convention To Github') {
+                echo "Post Convention Report"
+                sh 'bundle exec danger'
+            }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/**'
-            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+           // archiveArtifacts artifacts: 'target/**'
+           // cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
         }
 
         success {
