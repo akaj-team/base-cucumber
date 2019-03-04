@@ -47,8 +47,8 @@ pipeline {
 
     post {
         always {
-//            archiveArtifacts artifacts: 'target/**'
-//            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+            archiveArtifacts artifacts: 'target/**'
+            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
         }
 
         success {
