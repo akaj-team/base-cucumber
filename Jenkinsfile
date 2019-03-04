@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine'
             image 'ruby:2.6.0-alpine3.8'
+            image 'maven:3-alpine'
         }
     }
 
