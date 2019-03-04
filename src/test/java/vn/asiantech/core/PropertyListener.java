@@ -19,7 +19,7 @@ public class PropertyListener extends TestListenerAdapter {
         Properties prop = new Properties();
         Capabilities capabilities = driver.getCapabilities();
         try {
-            OutputStream output = new FileOutputStream("target/browser.properties");
+            OutputStream output = new FileOutputStream("target/cucumber-reports/browser.properties");
             prop.setProperty("BrowserName", capabilities.getBrowserName());
             prop.setProperty("BrowserVersion", capabilities.getVersion());
             prop.setProperty("Platform", capabilities.getPlatform().name());

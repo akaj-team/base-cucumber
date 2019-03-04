@@ -1,0 +1,693 @@
+[
+  {
+    "line": 2,
+    "elements": [
+      {
+        "line": 4,
+        "name": "I open homepage and check my certificate, if url redirect to login page then I login with my account",
+        "description": "",
+        "id": "check-login-and-logout;i-open-homepage-and-check-my-certificate--if-url-redirect-to-login-page-then-i-login-with-my-account",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 9545426709,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "I am logged in as a team manager",
+            "match": {
+              "location": "AuthenticateDefinitions.java:19"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 2522269776,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "I am an unauthenticated user",
+            "match": {
+              "location": "AuthenticateDefinitions.java:30"
+            },
+            "keyword": "Given "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginAndLogout"
+          }
+        ]
+      }
+    ],
+    "name": "Check Login and logout",
+    "description": "",
+    "id": "check-login-and-logout",
+    "keyword": "Feature",
+    "uri": "src/test/resources/features/login/Authenticate.feature",
+    "tags": [
+      {
+        "name": "@LoginAndLogout",
+        "type": "Tag",
+        "location": {
+          "line": 1,
+          "column": 1
+        }
+      }
+    ]
+  },
+  {
+    "line": 2,
+    "elements": [
+      {
+        "line": 7,
+        "name": "User navigates to Company home page",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 1889977194,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I open login page",
+            "match": {
+              "location": "PortalLoginDefinitions.java:22"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 199967833,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Browser should redirect to \"/auth/login\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "/auth/login",
+                  "offset": 28
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:24"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 11,
+        "name": "Login success with correct account",
+        "description": "",
+        "id": "check-login-at-portal;login-success-with-correct-account",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 826130150,
+              "status": "passed"
+            },
+            "line": 12,
+            "name": "I enter my username",
+            "match": {
+              "location": "PortalLoginDefinitions.java:38"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 230615491,
+              "status": "passed"
+            },
+            "line": 13,
+            "name": "I fill in password",
+            "match": {
+              "location": "PortalLoginDefinitions.java:44"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 216909795,
+              "status": "passed"
+            },
+            "line": 14,
+            "name": "I click on login button",
+            "match": {
+              "location": "PortalLoginDefinitions.java:54"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 4746431247,
+              "status": "passed"
+            },
+            "line": 15,
+            "name": "I should see the welcome message",
+            "match": {
+              "location": "PortalLoginDefinitions.java:56"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginPage"
+          }
+        ]
+      },
+      {
+        "line": 7,
+        "name": "User navigates to Company home page",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 3564324878,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I open login page",
+            "match": {
+              "location": "PortalLoginDefinitions.java:22"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 925150640,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Browser should redirect to \"/auth/login\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "/auth/login",
+                  "offset": 28
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:24"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 23,
+        "name": "Login button is disabled when not validated",
+        "description": "",
+        "id": "check-login-at-portal;login-button-is-disabled-when-not-validated;;2",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 230860737,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "I enter my username with \"Test\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Test",
+                  "offset": 26
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:46"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 154914728,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "I fill in password with \"!23\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "!23",
+                  "offset": 25
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:52"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 87430848,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Login button will be disabled",
+            "match": {
+              "location": "PortalLoginDefinitions.java:63"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginPage"
+          }
+        ]
+      },
+      {
+        "line": 7,
+        "name": "User navigates to Company home page",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 624115058,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I open login page",
+            "match": {
+              "location": "PortalLoginDefinitions.java:22"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 129417962,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Browser should redirect to \"/auth/login\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "/auth/login",
+                  "offset": 28
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:24"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 24,
+        "name": "Login button is disabled when not validated",
+        "description": "",
+        "id": "check-login-at-portal;login-button-is-disabled-when-not-validated;;3",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 193545910,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "I enter my username with \"Tset\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Tset",
+                  "offset": 26
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:46"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 124303436,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "I fill in password with \"123\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "123",
+                  "offset": 25
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:52"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 77564359,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Login button will be disabled",
+            "match": {
+              "location": "PortalLoginDefinitions.java:63"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginPage"
+          }
+        ]
+      },
+      {
+        "line": 7,
+        "name": "User navigates to Company home page",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 527192937,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I open login page",
+            "match": {
+              "location": "PortalLoginDefinitions.java:22"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 136778331,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Browser should redirect to \"/auth/login\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "/auth/login",
+                  "offset": 28
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:24"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 25,
+        "name": "Login button is disabled when not validated",
+        "description": "",
+        "id": "check-login-at-portal;login-button-is-disabled-when-not-validated;;4",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 392729842,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "I enter my username with \"tien,hoang@asiantech.vn\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "tien,hoang@asiantech.vn",
+                  "offset": 26
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:46"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 122148185,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "I fill in password with \"!23\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "!23",
+                  "offset": 25
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:52"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 56059484,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Login button will be disabled",
+            "match": {
+              "location": "PortalLoginDefinitions.java:63"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginPage"
+          }
+        ]
+      },
+      {
+        "line": 7,
+        "name": "User navigates to Company home page",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 522238494,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I open login page",
+            "match": {
+              "location": "PortalLoginDefinitions.java:22"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 125766840,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Browser should redirect to \"/auth/login\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "/auth/login",
+                  "offset": 28
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:24"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 26,
+        "name": "Login button is disabled when not validated",
+        "description": "",
+        "id": "check-login-at-portal;login-button-is-disabled-when-not-validated;;5",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 193702394,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "I enter my username with \"Test\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "Test",
+                  "offset": 26
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:46"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 94316631,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "I fill in password with \"\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "",
+                  "offset": 25
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:52"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 50131743,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Login button will be disabled",
+            "match": {
+              "location": "PortalLoginDefinitions.java:63"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginPage"
+          }
+        ]
+      },
+      {
+        "line": 7,
+        "name": "User navigates to Company home page",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 570315145,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "I open login page",
+            "match": {
+              "location": "PortalLoginDefinitions.java:22"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 171617010,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "Browser should redirect to \"/auth/login\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "/auth/login",
+                  "offset": 28
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:24"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 27,
+        "name": "Login button is disabled when not validated",
+        "description": "",
+        "id": "check-login-at-portal;login-button-is-disabled-when-not-validated;;6",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 154759537,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "I enter my username with \"\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "",
+                  "offset": 26
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:46"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 138629068,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "I fill in password with \"123\"",
+            "match": {
+              "arguments": [
+                {
+                  "val": "123",
+                  "offset": 25
+                }
+              ],
+              "location": "PortalLoginDefinitions.java:52"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 73074934,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Login button will be disabled",
+            "match": {
+              "location": "PortalLoginDefinitions.java:63"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@LoginPage"
+          }
+        ]
+      }
+    ],
+    "name": "Check Login AT Portal",
+    "description": "  As an employee of the company\n  I want to login my employee profile using my credentials\n  In order to check my profile",
+    "id": "check-login-at-portal",
+    "keyword": "Feature",
+    "uri": "src/test/resources/features/login/PortalLogin.feature",
+    "tags": [
+      {
+        "name": "@LoginPage",
+        "type": "Tag",
+        "location": {
+          "line": 1,
+          "column": 1
+        }
+      }
+    ]
+  }
+]
