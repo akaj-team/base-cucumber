@@ -16,6 +16,7 @@ pipeline {
 
         stage('Install danger') {
             steps("Install danger") {
+                sh "bundle install"
                 sh "bundle update danger"
             }
         }
