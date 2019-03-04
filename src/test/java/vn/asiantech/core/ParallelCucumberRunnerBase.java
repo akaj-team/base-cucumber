@@ -17,7 +17,7 @@ public class ParallelCucumberRunnerBase extends CustomAbstractTestNGCucumberTest
     @BeforeClass(alwaysRun = true)
     public void setUpClass(final ITestContext context) throws Exception {
         super.setUpClass(context);
-        DriverFactory.instance.startDriver(context.getCurrentXmlTest());
+        DriverFactory.instance.startDriver(context);
     }
 
     @AfterClass(alwaysRun = true)

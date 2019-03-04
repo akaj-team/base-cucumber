@@ -38,7 +38,9 @@ public abstract class CustomAbstractTestNGCucumberTests {
     public Object[][] scenarios() {
         Object[][] scenarios = this.testNGCucumberRunner.provideScenarios();
         List<Object[]> runScenarios = new ArrayList();
-        if (scenarios.length != 0 && scenarios.length > threadCount) {
+        System.out.println(scenarios.length);
+        System.out.println(threadCount);
+        if (scenarios.length != 0 && threadCount != 0 && scenarios.length > threadCount) {
             int number = scenarios.length / threadCount;
             if (browserCount != (threadCount - 1)) {
                 for (int i = browserCount * number; i < number * (browserCount + 1); i++) {

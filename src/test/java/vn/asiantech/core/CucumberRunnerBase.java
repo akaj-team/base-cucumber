@@ -1,13 +1,14 @@
 package vn.asiantech.core;
 
+import cucumber.api.testng.AbstractTestNGCucumberTests;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 
-@Listeners(ScreenShotListener.class)
-public class CucumberRunnerBase extends CustomAbstractTestNGCucumberTests {
+@Listeners({ScreenShotListener.class, PropertyListener.class})
+public class CucumberRunnerBase extends AbstractTestNGCucumberTests {
 
     @DataProvider
     public Object[][] features() {
@@ -16,8 +17,8 @@ public class CucumberRunnerBase extends CustomAbstractTestNGCucumberTests {
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass(final ITestContext context) throws Exception {
-        super.setUpClass(context);
-        DriverFactory.instance.startDriver(context.getCurrentXmlTest());
+        super.setUpClass();
+        DriverFactory.instance.startDriver(context);
     }
 
     @AfterClass(alwaysRun = true)
