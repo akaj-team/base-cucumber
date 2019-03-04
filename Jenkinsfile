@@ -25,12 +25,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Post Convention To Github') {
+            echo "Post Convention Report"
+            sh 'bundle exec danger'
+        }
     }
 
     post {
         always {
-            echo "Post Convention Report"
-            sh 'bundle exec danger'
             archiveArtifacts artifacts: 'target/**'
             cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
         }
