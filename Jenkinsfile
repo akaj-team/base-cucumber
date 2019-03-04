@@ -29,7 +29,8 @@ pipeline {
 
     post {
         always {
-            junit 'target/checkstyle.xml'
+            echo "Post Convention Report"
+            sh 'bundle exec danger'
             archiveArtifacts artifacts: 'target/**'
             cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
         }
