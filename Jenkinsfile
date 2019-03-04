@@ -8,13 +8,14 @@ pipeline {
     }
 
     stages {
+        stage('Install bundle') {
+            steps("Install bundle") {
+                sh "gem install bundle"
+            }
+        }
+
         stage('Build') {
             parallel {
-
-                steps("Install bundle") {
-                    sh "gem install bundle"
-                }
-
                 stage('Run Test') {
                     // steps {
                     //     sh 'run-test.sh chrome 3'
@@ -42,8 +43,8 @@ pipeline {
 
     post {
         always {
-            // archiveArtifacts artifacts: 'target/**'
-            // cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+            archiveArtifacts artifacts: 'target/**'
+            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
         }
 
         success {
