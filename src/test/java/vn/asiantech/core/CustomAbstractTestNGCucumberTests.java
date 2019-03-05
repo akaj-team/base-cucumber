@@ -10,6 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class CustomAbstractTestNGCucumberTests {
@@ -36,14 +37,10 @@ public abstract class CustomAbstractTestNGCucumberTests {
 
     @DataProvider
     public Object[][] scenarios() {
-        Object[][] scenarios = this.testNGCucumberRunner.provideScenarios();
-        List<Object[]> runScenarios = new ArrayList();
-        int number = scenarios.length / threadCount;
-        for (int i = browserCount * number; i < scenarios.length; i++) {
-            if (i <= browserCount * number + number - 1 || (browserCount == threadCount - 1)) {
-                runScenarios.add(scenarios[i]);
-            }
-        }
+        ArrayList<Object> scenarios = new ArrayList<>(Arrays.asList(this.testNGCucumberRunner.provideScenarios()));
+        int scenarioPerThread = scenarios.size() / threadCount;
+        List<Object> runScenarios = (browserCount == threadCount - 1) ? scenarios.subList(browserCount * scenarioPerThread, scenarios.size())
+                : scenarios.subList(browserCount * scenarioPerThread, browserCount * scenarioPerThread + scenarioPerThread);
         System.out.println("Thread " + browserCount + " run " + runScenarios.size() + " scenarios");
         browserCount++;
         return this.testNGCucumberRunner == null ? new Object[0][0] : runScenarios.toArray(new Object[0][]);
