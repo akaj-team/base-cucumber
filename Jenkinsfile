@@ -11,7 +11,7 @@ pipeline {
         stage('Install bundle') {
             agent {
                 docker {
-                    image 'ruby:2.6.0-alpine3.8'
+                    image 'ruby:2.6.1-alpine3.8'
                 }
             }
 
