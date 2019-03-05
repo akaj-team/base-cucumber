@@ -1,16 +1,12 @@
 pipeline {
-    agent any
-//    agent {
-//        docker {
-//            image 'maven:3-alpine'
-//        }
-//    }
+    agent none
 
     stages {
         stage('Install bundle') {
             agent {
                 docker {
                     image 'ruby:2.6.1-alpine3.8'
+                    args '-v $HOME/vendor/bundle:/vendor/bundle'
                 }
             }
             // https://stackoverflow.com/questions/45142855/bin-sh-apt-get-not-found
@@ -18,7 +14,7 @@ pipeline {
                 sh 'gem -v'
                 sh 'apk add libgcrypt-dev make gcc libc-dev git'
                 sh 'gem install bundle --no-document -- --use-system-libraries'
-                sh 'bundle install'
+                sh 'bundle install --path /vendor/bundle'
             }
         }
 
