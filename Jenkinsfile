@@ -60,10 +60,10 @@ pipeline {
                     }
 
                     post {
-                        always {
-                            echo "Post Convention Report"
-                            sh 'bundle exec danger'
-                        }
+//                        always {
+//                            echo "Post Convention Report"
+//                            sh 'bundle exec danger'
+//                        }
 
                         success {
                             echo "Post Convention Report"
