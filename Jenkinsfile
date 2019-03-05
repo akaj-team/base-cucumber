@@ -16,9 +16,7 @@ pipeline {
             }
             // https://stackoverflow.com/questions/45142855/bin-sh-apt-get-not-found
             steps("Install bundle & danger") {
-//                sh 'apk update'
-//                sh 'apk add libgmp3-dev'
-                sh 'apt-get install libgmp3-dev'
+                sh 'apk update'
                 sh 'gem install bundler'
                 sh 'bundle install'
                 sh 'bundle update danger'
