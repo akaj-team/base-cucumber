@@ -16,10 +16,10 @@ pipeline {
             }
             // https://stackoverflow.com/questions/45142855/bin-sh-apt-get-not-found
             steps("Install bundle & danger") {
-                sh 'apk update'
-                sh 'gem install bundler'
+                sh 'gem -v'
+                sh 'apk add libgcrypt-dev make gcc libc-dev git'
+                sh 'gem install bundle --no-document -- --use-system-libraries'
                 sh 'bundle install'
-                sh 'bundle update danger'
             }
         }
 
