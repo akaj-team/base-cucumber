@@ -45,25 +45,23 @@ pipeline {
                     }
                 }
 
-                stage('Validate Code & Report Github') {
-                    stage('Validate Code Convention') {
-                        agent {
-                            docker {
-                                image 'maven:3-alpine'
-                            }
+                stage('Validate Code Convention') {
+                    agent {
+                        docker {
+                            image 'maven:3-alpine'
                         }
+                    }
 
-                        steps {
-                            sh 'mvn validate'
+                    steps {
+                        sh 'mvn validate'
+                    }
+
+                    post {
+                        success {
+                            echo "Validate succeeded"
                         }
-
-                        post {
-                            success {
-                                echo "Validate succeeded"
-                            }
-                            failure {
-                                echo "Validate failed"
-                            }
+                        failure {
+                            echo "Validate failed"
                         }
                     }
                 }
