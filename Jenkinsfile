@@ -7,7 +7,6 @@ pipeline {
 //    }
 
     stages {
-
         stage('Install bundle') {
             agent {
                 docker {
@@ -56,6 +55,7 @@ pipeline {
                     }
 
                     steps {
+                        sh 'rm ./target'
                         sh 'mvn validate'
                     }
 
@@ -68,26 +68,22 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
 
-                stage('Report To Github') {
-                    agent {
-                        docker {
-                            image 'maven:3-alpine'
-                        }
-                    }
+        stage('Report To Github') {
+            steps {
+                sh 'pwd'
+                sh 'find ./target'
+                sh 'bundle exec danger'
+            }
 
-                    steps {
-                        sh 'bundle exec danger'
-                    }
-
-                    post {
-                        success {
-                            echo "Report succeeded"
-                        }
-                        failure {
-                            echo "Report failed"
-                        }
-                    }
+            post {
+                success {
+                    echo "Report succeeded"
+                }
+                failure {
+                    echo "Report failed"
                 }
             }
         }
