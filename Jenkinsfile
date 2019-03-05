@@ -55,7 +55,6 @@ pipeline {
                     }
 
                     steps {
-                        sh 'rm ./target'
                         sh 'mvn validate'
                     }
 
