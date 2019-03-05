@@ -43,13 +43,9 @@ pipeline {
             // Docker run a docker file [follow case each [environment]
             // https://docs.docker.com/engine/reference/builder/
             steps("Install bundle & danger") {
-                sh 'gem -v'
                 sh 'apk add libgcrypt-dev make gcc libc-dev git'
                 sh 'gem install bundle --no-document -- --use-system-libraries'
                 sh 'bundle install --path /vendor/bundle'
-
-                sh 'pwd'
-                sh 'find ./'
                 sh 'bundle exec danger'
             }
 
