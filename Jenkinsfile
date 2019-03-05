@@ -16,10 +16,11 @@ pipeline {
             }
 
             steps("Install bundle & danger") {
-                sh "apt-get install libgmp3-dev"
+                sh 'apt-get install'
+                sh 'apt-get install libgmp3-dev'
                 sh "gem install bundler"
-                sh "bundle install"
-                sh "bundle update danger"
+                sh 'bundle install'
+                sh 'bundle update danger'
             }
         }
 
