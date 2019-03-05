@@ -8,43 +8,26 @@ pipeline {
                     // steps {
                     //     sh 'run-test.sh chrome 3'
                     // }
-                    steps {
-                        echo "Step A"
-                    }
-
                     post {
                         // always {
                         //    archiveArtifacts artifacts: 'target/**'
                         //    cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
                         // }
-
-                        success {
-                            echo "Test succeeded"
-                        }
-                        failure {
-                            echo "Test failed"
-                        }
+                        success { echo "Test succeeded" }
+                        failure { echo "Test failed" }
                     }
                 }
 
                 stage('Validate Code Convention') {
                     agent {
-                        docker {
-                            image 'maven:3-alpine'
-                        }
+                        docker { image 'maven:3-alpine' }
                     }
 
-                    steps {
-                        sh 'mvn validate'
-                    }
+                    steps { sh 'mvn validate' }
 
                     post {
-                        success {
-                            echo "Validate succeeded"
-                        }
-                        failure {
-                            echo "Validate failed"
-                        }
+                        success { echo "Validate succeeded" }
+                        failure { echo "Validate failed" }
                     }
                 }
             }
@@ -71,12 +54,8 @@ pipeline {
             }
 
             post {
-                success {
-                    echo "Report succeeded"
-                }
-                failure {
-                    echo "Report failed"
-                }
+                success { echo "Report succeeded" }
+                failure { echo "Report failed" }
             }
         }
     }
