@@ -66,21 +66,20 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Report To Github') {
+            steps {
+                sh 'pwd'
+                sh 'find ./'
+                sh 'bundle exec danger'
+            }
 
-            stage('Report To Github') {
-                steps {
-                    sh 'pwd'
-                    sh 'find ./'
-                    sh 'bundle exec danger'
+            post {
+                success {
+                    echo "Report succeeded"
                 }
-
-                post {
-                    success {
-                        echo "Report succeeded"
-                    }
-                    failure {
-                        echo "Report failed"
-                    }
+                failure {
+                    echo "Report failed"
                 }
             }
         }
