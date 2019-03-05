@@ -64,9 +64,7 @@ pipeline {
                 sh 'apk add libgcrypt-dev make gcc libc-dev git'
                 sh 'gem install bundle --no-document -- --use-system-libraries'
                 sh 'bundle install --path /vendor/bundle'
-            }
 
-            steps('Report To Github') {
                 sh 'pwd'
                 sh 'find ./'
                 sh 'bundle exec danger'
