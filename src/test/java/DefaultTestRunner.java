@@ -10,6 +10,7 @@ import vn.asiantech.core.CucumberRunnerBase;
         tags = {"not @Ignore"},
         plugin = {
                 "pretty",
+                "usage:target/cucumber-usage.json",
                 "html:target/cucumber-reports/cucumber-pretty",
                 "json:target/cucumber-reports/CucumberTestReport.json",
                 "rerun:target/cucumber-reports/rerun.txt"

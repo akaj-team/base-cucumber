@@ -11,15 +11,15 @@ public class LoginPage extends BasePage<LoginPage> {
     @FindBy(css = "input[formcontrolname=email]")
     private WebElement usernameInput;
     @FindBy(css = "input[formcontrolname=password]")
-    private WebElement passwordInput;
+    private WebElement PasswordInput;
     @FindBy(css = "button.btn-primary")
-    private WebElement loginButton;
+    private WebElement LoginButton;
     @FindBy(className = "text-danger")
     private WebElement errorText;
 
     private WebDriver driver;
 
-    public LoginPage(final WebDriver driver) {
+    public LoginPage(final WebDriver driver){
         super(driver);
         this.driver = driver;
     }
@@ -31,7 +31,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public LoginPage login() {
-        loginButton.click();
+        LoginButton.click();
         return this;
     }
 
@@ -41,12 +41,12 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public final LoginPage withPassword(final String password) {
-        passwordInput.sendKeys(password);
+        PasswordInput.sendKeys(password);
         return this;
     }
 
     public final void waitForLoginButton() {
-        waitForElement(driver, loginButton);
+        waitForElement(driver, LoginButton);
     }
 
     public final boolean hasEmail() {
@@ -62,7 +62,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public final WebElement getLoginButton() {
-        return loginButton;
+        return LoginButton;
     }
 
     public final void waitForErrorMessage() {

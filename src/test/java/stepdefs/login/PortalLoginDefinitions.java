@@ -14,7 +14,7 @@ import static vn.asiantech.base.Constant.DEFAULT_TIME_OUT;
 import static vn.asiantech.base.Constant.LOGIN_PAGE_URL;
 
 public class PortalLoginDefinitions extends BaseDefinitions implements En {
-    private LoginPage loginPage;
+    private LoginPage LoginPage;
     private HomePage homePage;
 
     public PortalLoginDefinitions() {
@@ -32,26 +32,26 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
             waitVisibilityOfElement(getDriver(), By.cssSelector(".middle-box.text-center.loginscreen"));
             String url = getDriver().getCurrentUrl();
             Assert.assertEquals(path, url.substring(url.length() - path.length()));
-            loginPage = initPage(getDriver(), LoginPage.class);
+            LoginPage = initPage(getDriver(), LoginPage.class);
         });
 
-        Given("^I enter my username$", () -> {
-            if (loginPage.hasEmail()) {
-                loginPage.withUsername(getAccount().email);
+        Given("^I enter my username$",()-> {
+            if (LoginPage.hasEmail()) {
+                LoginPage.withUsername(getAccount().email);
             }
         });
 
-        And("^I fill in password$", () -> loginPage.withPassword(getAccount().password));
+        And("^I fill in password$", () -> LoginPage.withPassword(getAccount().password));
 
         Given("^I enter my username with \"([^\"]*)\"$", (String email) -> {
-            if (loginPage.hasEmail()) {
-                loginPage.withUsername(email);
+            if (LoginPage.hasEmail()) {
+                LoginPage.withUsername(email);
             }
         });
 
-        And("^I fill in password with \"([^\"]*)\"$", (String pwd) -> loginPage.withPassword(pwd));
+        And("^I fill in password with \"([^\"]*)\"$", (String pwd) -> LoginPage.withPassword(pwd));
 
-        When("^I click on login button$", () -> loginPage.login());
+        When("^I click on login button$", () -> LoginPage.login());
 
         Then("^I should see the welcome message$", () -> {
             homePage = initPage(getDriver(), HomePage.class);
@@ -60,12 +60,12 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
             Assert.assertTrue(homePage.welcomeTestIsDisplayed());
         });
 
-        Then("^Login button will be disabled$", () -> Assert.assertFalse(loginPage.getLoginButton().isEnabled()));
+        Then("^Login button will be disabled$", () -> Assert.assertFalse(LoginPage.getLoginButton().isEnabled()));
 
         Then("^Error message should display and show \"([^\"]*)\"$", (String warning) -> {
-            loginPage.waitForErrorMessage();
-            Assert.assertTrue(loginPage.errorMessageIsDisplayed());
-            Assert.assertEquals(warning, loginPage.getErrorMessage());
+            LoginPage.waitForErrorMessage();
+            Assert.assertTrue(LoginPage.errorMessageIsDisplayed());
+            Assert.assertEquals(warning, LoginPage.getErrorMessage());
         });
 
         Then("^I click on logout button$", () -> homePage.logout());
