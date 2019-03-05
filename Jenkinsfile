@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     stages {
         stage('Install bundle') {
@@ -43,42 +43,44 @@ pipeline {
                     }
                 }
 
-                stage('Validate Code Convention') {
-                    agent {
-                        docker {
-                            image 'maven:3-alpine'
+                stages('Validate Code & Report Github') {
+                    stage('Validate Code Convention') {
+                        agent {
+                            docker {
+                                image 'maven:3-alpine'
+                            }
+                        }
+
+                        steps {
+                            sh 'mvn validate'
+                        }
+
+                        post {
+                            success {
+                                echo "Validate succeeded"
+                            }
+                            failure {
+                                echo "Validate failed"
+                            }
                         }
                     }
 
-                    steps {
-                        sh 'mvn validate'
-                    }
-
-                    post {
-                        success {
-                            echo "Validate succeeded"
+                    stage('Report To Github') {
+                        steps {
+                            sh 'pwd'
+                            sh 'find ./'
+                            sh 'bundle exec danger'
                         }
-                        failure {
-                            echo "Validate failed"
+
+                        post {
+                            success {
+                                echo "Report succeeded"
+                            }
+                            failure {
+                                echo "Report failed"
+                            }
                         }
                     }
-                }
-            }
-        }
-
-        stage('Report To Github') {
-            steps {
-                sh 'pwd'
-                sh 'find ./'
-                sh 'bundle exec danger'
-            }
-
-            post {
-                success {
-                    echo "Report succeeded"
-                }
-                failure {
-                    echo "Report failed"
                 }
             }
         }
