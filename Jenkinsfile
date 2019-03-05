@@ -14,9 +14,9 @@ pipeline {
                     image 'ruby:2.6.1-alpine3.8'
                 }
             }
-
+            // https://stackoverflow.com/questions/45142855/bin-sh-apt-get-not-found
             steps("Install bundle & danger") {
-                sh 'apt-get install libgmp3-dev'
+                sh 'apk add libgmp3-dev'
                 sh 'gem install bundler'
                 sh 'bundle install'
                 sh 'bundle update danger'
