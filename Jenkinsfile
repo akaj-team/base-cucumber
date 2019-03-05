@@ -74,7 +74,7 @@ pipeline {
         stage('Report To Github') {
             steps {
                 sh 'pwd'
-                sh 'find ./target'
+                sh 'ls ./target'
                 sh 'bundle exec danger'
             }
 
