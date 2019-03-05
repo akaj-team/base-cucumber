@@ -38,10 +38,10 @@ pipeline {
                     }
 
                     post {
-                        always {
-                            archiveArtifacts artifacts: 'target/**'
-                            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-                        }
+                        // always {
+                        //    archiveArtifacts artifacts: 'target/**'
+                        //    cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+                        // }
 
                         success {
                             echo "Test succeeded"
@@ -53,6 +53,12 @@ pipeline {
                 }
 
                 stage('Validate Code Convention') {
+                    agent {
+                        docker {
+                            image 'maven:3-alpine'
+                        }
+                    }
+
                     steps {
                         sh 'mvn validate'
                     }
@@ -76,18 +82,4 @@ pipeline {
             }
         }
     }
-
-//    post {
-//        always {
-//            archiveArtifacts artifacts: 'target/**'
-//            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-//        }
-//
-//        success {
-//            echo "Test succeeded"
-//        }
-//        failure {
-//            echo "Test failed"
-//        }
-//    }
 }
