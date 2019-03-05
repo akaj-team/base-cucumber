@@ -60,18 +60,32 @@ pipeline {
                     }
 
                     post {
-//                        always {
-//                            echo "Post Convention Report"
-//                            sh 'bundle exec danger'
-//                        }
-
                         success {
-                            echo "Post Convention Report"
-                            sh 'bundle exec danger'
-                            echo "Test succeeded"
+                            echo "Validate succeeded"
                         }
                         failure {
-                            echo "Test failed"
+                            echo "Validate failed"
+                        }
+                    }
+                }
+
+                stage('Report To Github') {
+                    agent {
+                        docker {
+                            image 'maven:3-alpine'
+                        }
+                    }
+
+                    steps {
+                        sh 'bundle exec danger'
+                    }
+
+                    post {
+                        success {
+                            echo "Report succeeded"
+                        }
+                        failure {
+                            echo "Report failed"
                         }
                     }
                 }
