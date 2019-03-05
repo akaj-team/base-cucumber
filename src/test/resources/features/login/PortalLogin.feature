@@ -27,7 +27,7 @@ Feature: Check Login AT Portal
       |                         | 123      |
       |                         |          |
 
-    @Only
+  @Only
   Scenario Outline: Show error message
     When I enter my username with "<username>"
     And I fill in password with "<password>"
@@ -42,4 +42,4 @@ Feature: Check Login AT Portal
       | tien.hoang@asiantech.vn | 1         | Email or password incorrect. |
       | tien.hoang@asiantech.vn | 123456788 | Email or password incorrect. |
       | tien.hoang@asiantech.vn | 3         | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | xxx        | Email or password incorrect. |
+      | tien.hoang@asiantech.vn | xxx       | Email or password incorrect. |

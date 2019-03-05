@@ -34,6 +34,7 @@ public class DriverFactory {
 
     public static DriverFactory instance = new DriverFactory();
     private static List<Integer> busyAccounts = new ArrayList<>();
+    private static RemoteWebDriver driver;
     private final String operatingSystem = System.getProperty("os.name").toUpperCase();
     private final String systemArchitecture = System.getProperty("os.arch");
     private final boolean proxyEnabled = Boolean.getBoolean("proxyEnabled");
@@ -42,6 +43,7 @@ public class DriverFactory {
     private final String proxyDetails = String.format("%s:%d", proxyHostname, proxyPort);
     private ThreadLocal<RemoteWebDriver> driverFactoryThread = new ThreadLocal<>();
     private ThreadLocal<Account> accountThread = new ThreadLocal<>();
+    private ITestContext context;
 
     private static Map<String, String> defaultParam() {
         Map<String, String> parameters = new HashMap<>();
@@ -49,6 +51,12 @@ public class DriverFactory {
         parameters.put("headless", "false");
         parameters.put("server", "");
         return parameters;
+    }
+
+    public static final void closeDriver() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     private void initSessionAccounts() {
@@ -135,9 +143,13 @@ public class DriverFactory {
             driver = new RemoteWebDriver(seleniumGridURL, desiredCapabilities);
         } else {
             driver = driverType.getWebDriverObject(desiredCapabilities, isHeadLess);
+            this.driver = driver;
         }
 
         driverFactoryThread.set(driver);
+        if (context != null) {
+            context.setAttribute("webDriver", driver);
+        }
     }
 
     public final Account getAccountCanUse() {
@@ -168,9 +180,9 @@ public class DriverFactory {
         }
     }
 
-    public synchronized void startDriver(final ITestContext t) {
-       startDriver(t.getCurrentXmlTest());
-
+    public synchronized void startDriver(final ITestContext context) {
+        this.context = context;
+        startDriver(context.getCurrentXmlTest());
     }
 
     public final void quitDriver() {
