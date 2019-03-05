@@ -15,14 +15,10 @@ pipeline {
                 }
             }
 
-            steps("Install bundle") {
+            steps("Install bundle & danger") {
+                sh "sudo apt-get install libgmp3-dev"
                 sh "gem install bundler"
                 sh "bundle install"
-            }
-        }
-
-        stage('Install danger') {
-            steps("Install danger") {
                 sh "bundle update danger"
             }
         }
