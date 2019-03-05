@@ -16,7 +16,7 @@ pipeline {
             }
 
             steps("Install bundle & danger") {
-                sh "sudo apt-get install libgmp3-dev"
+                sh "apt-get install libgmp3-dev"
                 sh "gem install bundler"
                 sh "bundle install"
                 sh "bundle update danger"
