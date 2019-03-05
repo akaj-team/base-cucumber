@@ -10,6 +10,8 @@ pipeline {
                 }
             }
             // https://stackoverflow.com/questions/45142855/bin-sh-apt-get-not-found
+            // Docker run a docker file [follow case each [environment]
+            // https://docs.docker.com/engine/reference/builder/
             steps("Install bundle & danger") {
                 sh 'gem -v'
                 sh 'apk add libgcrypt-dev make gcc libc-dev git'
@@ -43,7 +45,7 @@ pipeline {
                     }
                 }
 
-                stages('Validate Code & Report Github') {
+                stage('Validate Code & Report Github') {
                     stage('Validate Code Convention') {
                         agent {
                             docker {
@@ -64,22 +66,22 @@ pipeline {
                             }
                         }
                     }
+                }
+            }
 
-                    stage('Report To Github') {
-                        steps {
-                            sh 'pwd'
-                            sh 'find ./'
-                            sh 'bundle exec danger'
-                        }
+            stage('Report To Github') {
+                steps {
+                    sh 'pwd'
+                    sh 'find ./'
+                    sh 'bundle exec danger'
+                }
 
-                        post {
-                            success {
-                                echo "Report succeeded"
-                            }
-                            failure {
-                                echo "Report failed"
-                            }
-                        }
+                post {
+                    success {
+                        echo "Report succeeded"
+                    }
+                    failure {
+                        echo "Report failed"
                     }
                 }
             }
