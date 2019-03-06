@@ -25,6 +25,11 @@ pipeline {
                     }
                 }
                 stage('Validate code') {
+                    when {
+                        not {
+                            environment name: 'CHANGE_ID', value: ''
+                        }
+                    }
                     stages {
                         stage('Validate') {
                             steps {
