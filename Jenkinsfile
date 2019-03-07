@@ -4,26 +4,26 @@ pipeline {
     stages {
         stage('Run Tests') {
 
-            parallel {
-                stage('Run cucumber') {
-                    steps {
-                        sh 'run-test.sh chrome 3'
+//            parallel {
+            stage('Run cucumber') {
+                steps {
+                    sh 'run-test.sh chrome 3'
+                }
+                post {
+                    always {
+                        archiveArtifacts artifacts: 'target/**'
+                        junit 'target/cucumber-reports/*.xml'
+                        cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
                     }
-                    post {
-                        always {
-                            archiveArtifacts artifacts: 'target/**'
-                            junit 'target/cucumber-reports/*.xml'
-                            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-                        }
 
-                        success {
-                            echo "Test succeeded"
-                            stash includes: 'target/GitHubReport.json', name: 'GitHubReport'
-                        }
-                        failure {
-                            echo "Test failed"
-                        }
+                    success {
+                        echo "Test succeeded"
+                        stash includes: 'target/GitHubReport.json', name: 'GitHubReport'
                     }
+                    failure {
+                        echo "Test failed"
+                    }
+//                    }
                 }
             }
 
