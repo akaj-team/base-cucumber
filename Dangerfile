@@ -10,28 +10,26 @@ checkstyle_format.base_path = (Dir.pwd).gsub(/@.*/,'')
 checkstyle_format.report 'target/checkstyle.xml'
 
 # Read and show report
-message = "Features | Scenarios| Steps|\n"
-end
-reportJsonFile = "target/GitHubReport.json"
-if(File.file?(reportJsonFile))
-    file1 = File.read(reportJsonFile)
-    file = JSON.parse(file1)
+#reportJsonFile = "target/GitHubReport.json"
+#if(File.file?(reportJsonFile))
+    #file1 = File.read(reportJsonFile)
+    #file = JSON.parse(file1)
 
-    puts "------------------------------------------------"
-    puts "|           |  Features  |  Scenarios  |   Steps  |"
-    puts "------------------------------------------------"
-    puts "|  Total    |      #{file['features']['totalFeatures']}     |       #{file['scenarios']['totalScenarios']}     |    #{file['steps']['totalSteps']}    |"
-    puts "------------------------------------------------"
-    puts "|  Passed   |      #{file['features']['featurePassed']}     |      #{file['scenarios']['scenarioPassed']}      |    #{file['steps']['stepPassed']}    |"
-    puts "------------------------------------------------"
-    puts "|  Failed   |      #{file['features']['featureFailed']}     |      #{file['scenarios']['scenarioFailed']}      |    #{file['steps']['stepFailed']}     |"
-    puts "------------------------------------------------"
-    puts "|  Skipped  |      0     |      0      |    #{file['steps']['stepSkipped']}     |"
-    puts "------------------------------------------------"
-    puts "|  Pending  |      0     |      0      |    #{file['steps']['stepPending']}     |"
-    puts "------------------------------------------------"
-    puts "| Undefined |      0     |      0      |    #{file['steps']['stepUndefined']}     |"
+    #puts "------------------------------------------------"
+    #puts "|           |  Features  |  Scenarios  |   Steps  |"
+    #puts "------------------------------------------------"
+    #puts "|  Total    |      #{file['features']['totalFeatures']}     |       #{file['scenarios']['totalScenarios']}     |    #{file['steps']['totalSteps']}    |"
+    #puts "------------------------------------------------"
+    #puts "|  Passed   |      #{file['features']['featurePassed']}     |      #{file['scenarios']['scenarioPassed']}      |    #{file['steps']['stepPassed']}    |"
+    #puts "------------------------------------------------"
+    #puts "|  Failed   |      #{file['features']['featureFailed']}     |      #{file['scenarios']['scenarioFailed']}      |    #{file['steps']['stepFailed']}     |"
+    #puts "------------------------------------------------"
+    #puts "|  Skipped  |      0     |      0      |    #{file['steps']['stepSkipped']}     |"
+    #puts "------------------------------------------------"
+    #puts "|  Pending  |      0     |      0      |    #{file['steps']['stepPending']}     |"
+    #puts "------------------------------------------------"
+    #puts "| Undefined |      0     |      0      |    #{file['steps']['stepUndefined']}     |"
 
-else
-    puts "Can not find json report file: #{reportJsonFile}"
-end
+#else
+    #puts "Can not find json report file: #{reportJsonFile}"
+#end
