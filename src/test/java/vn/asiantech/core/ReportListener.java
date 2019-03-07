@@ -227,6 +227,6 @@ public class ReportListener extends TestListenerAdapter {
         report.add(featureObject);
         report.add(scenarioObject);
         report.add(stepObject);
-        Files.write(Paths.get("target/git-report/GitHubReport.json"), report.toJSONString().getBytes());
+        Files.write(Paths.get("target/GitHubReport.json"), report.toJSONString().getBytes());
     }
 }
