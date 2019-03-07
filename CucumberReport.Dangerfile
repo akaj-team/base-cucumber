@@ -1,6 +1,7 @@
 # Read and show report
 require 'json'
 
+message "Cucumber report"
 reportJsonFile = "target/GitHubReport.json"
 if(File.file?(reportJsonFile))
       file = File.read(reportJsonFile)

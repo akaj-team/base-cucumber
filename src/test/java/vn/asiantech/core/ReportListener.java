@@ -1,5 +1,6 @@
 package vn.asiantech.core;
 
+import org.apache.commons.lang.time.DurationFormatUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,6 +29,7 @@ public class ReportListener extends TestListenerAdapter {
     private long featurePassed = 0;
     private long featureFailed = 0;
     private long sumFeatures = 0;
+    private long totalTime = 0;
     private File[] files;
 
     @Override
@@ -113,6 +115,8 @@ public class ReportListener extends TestListenerAdapter {
                     JSONObject stepObject = (JSONObject) step;
                     JSONObject resultObject = (JSONObject) stepObject.get("result");
                     String status = (String) resultObject.get("status");
+                    long duration = (long) resultObject.get("duration");
+                    totalTime += duration;
                     switch (status) {
                         case "failed":
                             stepFailed++;
@@ -173,20 +177,19 @@ public class ReportListener extends TestListenerAdapter {
         System.out.println("Sum of scenario failed: " + scenarioFailed);
         System.out.println("Sum of feature passed: " + featurePassed);
         System.out.println("Sum of feature failed: " + scenarioFailed);
+        System.out.println("Sum of duration: " + getTime(totalTime));
         createGitReport();
     }
-
-//    private String convertTime(long timeStamp) {
-//        Date date = new Date(timeStamp);
-//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-//        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-//        return formatter.format(date);
-//    }
 
     private JSONArray getFeatures(final FileReader file) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         Object object = parser.parse(file);
         return (JSONArray) object;
+    }
+
+    private String getTime(long microSecond) {
+        long miliSecond = microSecond / 1000;
+        return DurationFormatUtils.formatDuration(miliSecond, "HH:mm:ss,SSS");
     }
 
     private File[] getAllFiles() {
