@@ -49,6 +49,8 @@ pipeline {
                             }
                             post {
                                 success {
+                                    sh "pwd"
+                                    sh "ls --la"
                                     sh "bundle exec danger"
                                 }
                             }
