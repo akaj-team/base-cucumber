@@ -15,5 +15,5 @@ if(File.file?(reportJsonFile))
       messages << "|Undefined|0|0|#{data['steps']['stepUndefined']}|\n"
     markdown messages
 else
-    puts "Can not find json report file: #{reportJsonFile}"
+    warn("Can not find json report file: #{reportJsonFile}")
 end
