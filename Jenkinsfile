@@ -8,11 +8,12 @@ pipeline {
                 stage('Run cucumber') {
                     steps {
                         sh 'run-test.sh chrome 3'
+                        sh 'mvn verify -DskipTests'
                     }
                     post {
                         always {
                             archiveArtifacts artifacts: 'target/**'
-//                            junit 'target/cucumber-reports/*.xml'
+                            junit 'target/cucumber-reports/*.xml'
                             cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
                         }
 
