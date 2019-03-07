@@ -11,7 +11,7 @@ checkstyle_format.report 'target/checkstyle.xml'
 
 # Read and show report
 require 'json'
-
+message = "Test case | Classname|\n"
 reportJsonFile = "target/GitHubReport.json"
 if(File.file?(reportJsonFile))
    file = File.read(reportJsonFile)

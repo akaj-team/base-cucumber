@@ -12,12 +12,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 public class ReportListener extends TestListenerAdapter {
     private long totalScenarios = 0;
@@ -35,7 +31,7 @@ public class ReportListener extends TestListenerAdapter {
     private File[] files;
 
     @Override
-    public void onFinish(ITestContext testContext) {
+    public final void onFinish(ITestContext testContext) {
         super.onFinish(testContext);
         try {
             mergeJsonFiles();
@@ -180,14 +176,14 @@ public class ReportListener extends TestListenerAdapter {
         createGitReport();
     }
 
-    private String convertTime(long timeStamp) {
-        Date date = new Date(timeStamp);
-        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return formatter.format(date);
-    }
+//    private String convertTime(long timeStamp) {
+//        Date date = new Date(timeStamp);
+//        DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+//        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        return formatter.format(date);
+//    }
 
-    private JSONArray getFeatures(FileReader file) throws IOException, ParseException {
+    private JSONArray getFeatures(final FileReader file) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         Object object = parser.parse(file);
         return (JSONArray) object;
