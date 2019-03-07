@@ -12,6 +12,7 @@ pipeline {
                     post {
                         always {
                             archiveArtifacts artifacts: 'target/**'
+                            junit 'target/cucumber-reports/*.xml'
                             cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
                         }
 
@@ -24,6 +25,11 @@ pipeline {
                     }
                 }
                 stage('Validate code') {
+                    when {
+                        not {
+                            environment name: 'CHANGE_ID', value: ''
+                        }
+                    }
                     stages {
                         stage('Validate') {
                             steps {
