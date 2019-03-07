@@ -16,6 +16,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ReportListener
+ */
 public class ReportListener extends TestListenerAdapter {
     private long totalFeatures = 0;
     private long featurePassed = 0;
@@ -43,7 +46,7 @@ public class ReportListener extends TestListenerAdapter {
     private File[] files;
 
     @Override
-    public final void onFinish(ITestContext testContext) {
+    public final void onFinish(final ITestContext testContext) {
         super.onFinish(testContext);
         try {
             mergeJsonFiles();
@@ -87,6 +90,7 @@ public class ReportListener extends TestListenerAdapter {
             }
         }
         Files.write(Paths.get(files[0].getPath()), resultFeatures.toJSONString().getBytes());
+        System.out.println("Merge json reports success.");
         deleteFiles();
 
         totalFeatures = resultFeatures.size();
@@ -104,8 +108,11 @@ public class ReportListener extends TestListenerAdapter {
                     JSONObject resultObject = (JSONObject) stepObject.get("result");
                     String status = (String) resultObject.get("status");
                     long duration = (long) resultObject.get("duration");
-                    totalDuration += duration;
                     switch (status) {
+                        case "passed":
+                            stepPassed++;
+                            passedDuration += duration;
+                            break;
                         case "failed":
                             stepFailed++;
                             failedDuration += duration;
@@ -118,28 +125,27 @@ public class ReportListener extends TestListenerAdapter {
                             stepPending++;
                             pendingDuration += duration;
                             break;
-                        case "undefined":
+                        default:
                             stepUndefined++;
                             undefineDuration += duration;
                             break;
-                        default:
-                            stepPassed++;
-                            passedDuration += duration;
-                            break;
+
                     }
+                    totalDuration += duration;
                 }
+                System.out.println("vo11111111");
                 if (elementObject.get("type").equals("scenario")) {
                     JSONArray steps = (JSONArray) elementObject.get("steps");
-                    boolean isPassed = true;
+                    boolean isScenarioPassed = true;
                     for (Object step : steps) {
                         JSONObject stepObject = (JSONObject) step;
                         JSONObject resultObject = (JSONObject) stepObject.get("result");
                         String status = (String) resultObject.get("status");
-                        if (!status.equals("passed") && isPassed) {
-                            isPassed = false;
+                        if (!status.equals("passed") && isScenarioPassed) {
+                            isScenarioPassed = false;
                         }
                     }
-                    if (isPassed) {
+                    if (isScenarioPassed) {
                         scenarioPassed++;
                     } else {
                         scenarioFailed++;
@@ -158,6 +164,15 @@ public class ReportListener extends TestListenerAdapter {
                 featureFailed++;
             }
         }
+
+        System.out.println("Sum of scenarios: " + totalScenarios);
+        System.out.println("Sum of steps: " + totalSteps);
+        System.out.println("Sum of step passed: " + stepPassed);
+        System.out.println("Sum of step failed: " + stepFailed);
+        System.out.println("Sum of scenario passed: " + scenarioPassed);
+        System.out.println("Sum of scenario failed: " + scenarioFailed);
+        System.out.println("Sum of feature passed: " + featurePassed);
+        System.out.println("Sum of feature failed: " + scenarioFailed);
         generateJsonReport();
     }
 
@@ -169,7 +184,7 @@ public class ReportListener extends TestListenerAdapter {
 
     private String getTime(long nanoSecond) {
         long miliSecond = nanoSecond / 1000000;
-        return DurationFormatUtils.formatDuration(miliSecond, "HH:mm:ss,SSS");
+        return DurationFormatUtils.formatDuration(miliSecond, "HH:mm:ss.SSS");
     }
 
     private File[] getAllFiles() {
@@ -216,5 +231,6 @@ public class ReportListener extends TestListenerAdapter {
         report.put("steps", step);
         report.put("durations", duration);
         Files.write(Paths.get("target/GitHubReport.json"), report.toJSONString().getBytes());
+        System.out.println("Generate cucumber report for github success.");
     }
 }
