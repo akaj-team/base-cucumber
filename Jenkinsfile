@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Run Tests') {
             parallel {
-                stages("Build") {
+                stage("Build") {
                     stage('Run cucumber') {
                         steps {
                             sh 'run-test.sh chrome 3'
