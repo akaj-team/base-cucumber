@@ -50,7 +50,7 @@ pipeline {
                             post {
                                 success {
                                     sh "pwd"
-                                    sh "ls --la"
+                                    sh "find ./"
                                     sh "bundle exec danger"
                                 }
                             }
