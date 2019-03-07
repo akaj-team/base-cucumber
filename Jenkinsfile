@@ -12,7 +12,7 @@ pipeline {
                     post {
                         always {
                             archiveArtifacts artifacts: 'target/**'
-                            junit 'target/cucumber-reports/*.xml'
+//                            junit 'target/cucumber-reports/*.xml'
                             cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
                         }
 
