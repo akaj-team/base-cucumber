@@ -19,17 +19,21 @@ import java.util.List;
 public class ReportListener extends TestListenerAdapter {
     private long totalScenarios = 0;
     private long totalSteps = 0;
+    private long totalFeatures = 0;
+    private long totalTime = 0;
+
+    private long featurePassed = 0;
     private long stepPassed = 0;
+    private long scenarioPassed = 0;
+
+    private long scenarioFailed = 0;
+    private long featureFailed = 0;
     private long stepFailed = 0;
+
     private long stepSkipped = 0;
     private long stepPending = 0;
     private long stepUndefined = 0;
-    private long scenarioPassed = 0;
-    private long scenarioFailed = 0;
-    private long featurePassed = 0;
-    private long featureFailed = 0;
-    private long sumFeatures = 0;
-    private long totalTime = 0;
+
     private File[] files;
 
     @Override
@@ -45,13 +49,13 @@ public class ReportListener extends TestListenerAdapter {
     private void mergeJsonFiles() throws IOException, ParseException {
         int size;
         files = getAllFiles();
-        List<String> ids = new ArrayList<>();
+        List<String> resultIds = new ArrayList<>();
         JSONArray resultFeatures;
         if (files.length > 0) {
             resultFeatures = getFeatures(new FileReader(files[0].getPath()));
             size = resultFeatures.size();
             for (int i = 0; i < size; i++) {
-                ids.add((String) ((JSONObject) resultFeatures.get(i)).get("id"));
+                resultIds.add((String) ((JSONObject) resultFeatures.get(i)).get("id"));
             }
         } else {
             return;
@@ -69,8 +73,8 @@ public class ReportListener extends TestListenerAdapter {
                         JSONArray mainElements = (JSONArray) mergeObject.get("elements");
                         JSONArray elements = (JSONArray) object.get("elements");
                         mainElements.addAll(elements);
-                    } else if (!ids.contains(idFeature)) {
-                        ids.add(idFeature);
+                    } else if (!resultIds.contains(idFeature)) {
+                        resultIds.add(idFeature);
                         resultFeatures.add(fileFeature);
                     }
                 }
@@ -79,8 +83,8 @@ public class ReportListener extends TestListenerAdapter {
         Files.write(Paths.get(files[0].getPath()), resultFeatures.toJSONString().getBytes());
         deleteFiles();
 
-        sumFeatures = resultFeatures.size();
-        System.out.println("Sum of features: " + sumFeatures);
+        totalFeatures = resultFeatures.size();
+        System.out.println("Sum of features: " + totalFeatures);
         for (Object resultFeature : resultFeatures) {
             JSONObject feature = (JSONObject) resultFeature;
             JSONArray elements = (JSONArray) feature.get("elements");
@@ -204,33 +208,32 @@ public class ReportListener extends TestListenerAdapter {
     }
 
     private void createGitReport() throws IOException {
-        JSONObject stepObject = new JSONObject();
+        JSONObject step = new JSONObject();
+        step.put("totalSteps", totalSteps);
+        step.put("stepPassed", stepPassed);
+        step.put("stepFailed", stepFailed);
+        step.put("stepSkipped", stepSkipped);
+        step.put("stepPending", stepPending);
+        step.put("stepUndefined", stepUndefined);
 
-        stepObject.put("totalSteps", totalSteps);
-        stepObject.put("stepPassed", stepPassed);
-        stepObject.put("stepFailed", stepFailed);
-        stepObject.put("stepSkipped", stepSkipped);
-        stepObject.put("stepPending", stepPending);
-        stepObject.put("stepUndefined", stepUndefined);
+        JSONObject scenario = new JSONObject();
+        scenario.put("totalScenarios", totalScenarios);
+        scenario.put("scenarioPassed", scenarioPassed);
+        scenario.put("scenarioFailed", scenarioFailed);
 
-        JSONObject scenarioObject = new JSONObject();
-        scenarioObject.put("totalScenarios", totalScenarios);
-        scenarioObject.put("scenarioPassed", scenarioPassed);
-        scenarioObject.put("scenarioFailed", scenarioFailed);
+        JSONObject feature = new JSONObject();
+        feature.put("totalFeatures", totalFeatures);
+        feature.put("featurePassed", featurePassed);
+        feature.put("featureFailed", featureFailed);
 
-        JSONObject featureObject = new JSONObject();
-        featureObject.put("totalFeatures", sumFeatures);
-        featureObject.put("featurePassed", featurePassed);
-        featureObject.put("featureFailed", featureFailed);
-
-        JSONObject durationObject = new JSONObject();
-        durationObject.put("totalDuration", getTime(totalTime));
+        JSONObject duration = new JSONObject();
+        duration.put("totalDuration", getTime(totalTime));
 
         JSONObject report = new JSONObject();
-        report.put("features", featureObject);
-        report.put("scenarios", scenarioObject);
-        report.put("steps", stepObject);
-        report.put("durations", durationObject);
+        report.put("features", feature);
+        report.put("scenarios", scenario);
+        report.put("steps", step);
+        report.put("durations", duration);
         Files.write(Paths.get("target/GitHubReport.json"), report.toJSONString().getBytes());
     }
 }
