@@ -14,3 +14,4 @@ messages << "|--- | --- |---|---|\n"
    messages << "|0|0|0|0|\n"
 
 #markdown messages unless file['features']['totalFeatures'] == 0
+markdown messages
