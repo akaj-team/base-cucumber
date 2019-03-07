@@ -33,10 +33,4 @@ public class PropertyListener extends TestListenerAdapter {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void onStart(ITestContext testContext) {
-        super.onStart(testContext);
-    }
 }
-

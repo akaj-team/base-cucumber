@@ -8,3 +8,16 @@ checkstyle_format.base_path = (Dir.pwd).gsub(/@.*/,'')
 
 # Report
 checkstyle_format.report 'target/checkstyle.xml'
+
+# Read and show report
+message = "Features | Scenarios| Steps|\n"
+end
+reportJsonFile = "target/GitHubReport.json"
+if(File.file?(reportJsonFile))
+    file = File.read(reportJsonFile)
+    data = JSON.parse(file)
+    col_labels = { features: "Features", scenario: "Scenarios", steps: "Steps" }
+    puts "aaaaaaa"
+else
+    puts "Can not find json report file: #{reportJsonFile}"
+end

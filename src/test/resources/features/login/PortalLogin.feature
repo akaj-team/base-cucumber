@@ -26,20 +26,20 @@ Feature: Check Login AT Portal
       | Test                    |          |
       |                         | 123      |
       |                         |          |
-
-  @Only
-  Scenario Outline: Show error message
-    When I enter my username with "<username>"
-    And I fill in password with "<password>"
-    And I click on login button
-    Then Error message should display and show "<warning>"
-
-    Examples:
-      | username                | password  | warning                      |
-      | tien.hoang@asiantech.vn | 123       | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | 12345     | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | 123abc!@# | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | 1         | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | 123456788 | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | 3         | Email or password incorrect. |
-      | tien.hoang@asiantech.vn | xxx       | Email or password incorrect. |
+#
+#  @Only
+#  Scenario Outline: Show error message
+#    When I enter my username with "<username>"
+#    And I fill in password with "<password>"
+#    And I click on login button
+#    Then Error message should display and show "<warning>"
+#
+#    Examples:
+#      | username                | password  | warning                      |
+#      | tien.hoang@asiantech.vn | 123       | Email or password incorrect. |
+#      | tien.hoang@asiantech.vn | 12345     | Email or password incorrect. |
+#      | tien.hoang@asiantech.vn | 123abc!@# | Email or password incorrect. |
+#      | tien.hoang@asiantech.vn | 1         | Email or password incorrect. |
+#      | tien.hoang@asiantech.vn | 123456788 | Email or password incorrect. |
+#      | tien.hoang@asiantech.vn | 3         | Email or password incorrect. |
+#      | tien.hoang@asiantech.vn | xxx       | Email or password incorrect. |

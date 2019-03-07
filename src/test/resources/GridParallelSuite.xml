@@ -1,11 +1,11 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Suite" thread-count="2" parallel="tests">
-    <test name="Chrome Test 1">
-        <parameter name="browserName" value="chrome"/>
-        <parameter name="server" value="http://remote_driver:4444/wd/hub"/>
+<suite name="Suite">
+    <parameter name="server" value="http://localhost:4444/wd/hub"/>
+    <parameter name="browserName" value="chrome"/>
+    <test name="Chrome Test" parallel="methods" thread-count="3">
         <classes>
-            <class name="DefaultTestRunner"/>
-            <!--<class name="DefaultTestRunner2"/>-->
+            <class name="generate.ParallelChromeTestRunnerGenerate1"/>
+            <class name="generate.ParallelChromeTestRunnerGenerate2"/>
+            <class name="generate.ParallelChromeTestRunnerGenerate3"/>
         </classes>
     </test>
 </suite>
