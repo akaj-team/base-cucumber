@@ -14,10 +14,21 @@ require 'json'
 
 reportJsonFile = "target/GitHubReport.json"
 if(File.file?(reportJsonFile))
-    file = File.read(reportJsonFile)
-    data = JSON.parse(file)
-    col_labels = { features: "Features", scenario: "Scenarios", steps: "Steps" }
-    puts "aaaaaaa"
+   file = File.read(reportJsonFile)
+   puts "------------------------------------------------"
+   puts "|           |  Features  |  Scenarios  |   Steps  |"
+   puts "------------------------------------------------"
+   puts "|  Total    |      #{file['features']['totalFeatures']}     |       #{file['scenarios']['totalScenarios']}     |    #{file['steps']['totalSteps']}    |"
+   puts "------------------------------------------------"
+   puts "|  Passed   |      #{file['features']['featurePassed']}     |      #{file['scenarios']['scenarioPassed']}      |    #{file['steps']['stepPassed']}    |"
+   puts "------------------------------------------------"
+   puts "|  Failed   |      #{file['features']['featureFailed']}     |      #{file['scenarios']['scenarioFailed']}      |    #{file['steps']['stepFailed']}     |"
+   puts "------------------------------------------------"
+   puts "|  Skipped  |      0     |      0      |    #{file['steps']['stepSkipped']}     |"
+   puts "------------------------------------------------"
+   puts "|  Pending  |      0     |      0      |    #{file['steps']['stepPending']}     |"
+   puts "------------------------------------------------"
+   puts "| Undefined |      0     |      0      |    #{file['steps']['stepUndefined']}     |"
 else
-    puts "Can not find json report file: #{reportJsonFile}"
+   puts "Can not find json report file: #{reportJsonFile}"
 end
