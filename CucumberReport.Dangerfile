@@ -1,18 +1,19 @@
 # Read and show report
 require 'json'
-reportJsonFile="target/GitHubReport.json"
+
+reportJsonFile = "target/GitHubReport.json"
 if(File.file?(reportJsonFile))
-  file = File.read(reportJsonFile)
-  data = JSON.parse(file)
-  messages = "||Feature|Scenarios|Steps|\n"
-  messages << "|---|---|---|---|\n"
-  messages << "|Total|#{file['features']['totalFeatures']}|#{file['scenarios']['totalScenarios']}|#{file['steps']['totalSteps']}|\n"
-  messages << "|Passed|#{file['features']['featurePassed']}|#{file['scenarios']['scenarioPassed']}|#{file['steps']['stepPassed']}|\n"
-  messages << "|Failed|#{file['features']['featureFailed']}|#{file['scenarios']['scenarioFailed']}|#{file['steps']['stepFailed']}|\n"
-  messages << "|Skipped|0|0|#{file['steps']['stepSkipped']}|\n"
-  messages << "|Pending|0|0|#{file['steps']['stepPending']}|\n"
-  messages << "|Undefined|0|0|#{file['steps']['stepUndefined']}|\n"
-  markdown messages
+      file = File.read(reportJsonFile)
+      data = JSON.parse(file)
+      messages = "||Features|Scenarios|Steps|\n"
+      messages << "|---|---|---|---|\n"
+      messages << "|Total|#{data['features']['totalFeatures']}|#{data['scenarios']['totalScenarios']}|#{data['steps']['totalSteps']}|\n"
+      messages << "|Passed|#{data['features']['featurePassed']}|#{data['scenarios']['scenarioPassed']}|#{data['steps']['stepPassed']}|\n"
+      messages << "|Failed|#{data['features']['featureFailed']}|#{data['scenarios']['scenarioFailed']}|#{data['steps']['stepFailed']}|\n"
+      messages << "|Skipped|0|0|#{data['steps']['stepSkipped']}|\n"
+      messages << "|Pending|0|0|#{data['steps']['stepPending']}|\n"
+      messages << "|Undefined|0|0|#{data['steps']['stepUndefined']}|\n"
+    markdown messages
 else
-  warn("Can not find json report file: #{reportJsonFile}")
+    puts "Can not find json report file: #{reportJsonFile}"
 end
