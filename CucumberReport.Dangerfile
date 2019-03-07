@@ -1,5 +1,6 @@
 # Read and show report
 require 'json'
+warn("Bla ble")
 reportJsonFile = "target/GitHubReport.json"
 if(File.file?(reportJsonFile))
    file = File.read(reportJsonFile)
