@@ -4,26 +4,46 @@ pipeline {
     stages {
         stage('Run Tests') {
             parallel {
-                stage('Run cucumber') {
-                    steps {
-                        sh 'run-test.sh chrome 3'
-                    }
-                    post {
-                        always {
-                            archiveArtifacts artifacts: 'target/**'
-                            junit 'target/cucumber-reports/*.xml'
-                            cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+                stages {
+                    stage('Run cucumber') {
+                        steps {
+                            sh 'run-test.sh chrome 3'
                         }
+                        post {
+                            always {
+                                archiveArtifacts artifacts: 'target/**'
+                                junit 'target/cucumber-reports/*.xml'
+                                cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
+                            }
 
-                        success {
-                            echo "Test succeeded"
-                            sh "bundle exec danger"
+                            success {
+                                echo "Test succeeded"
+                                stash includes: 'target/GitHubReport.json', name: 'github-report'
+                            }
+                            failure {
+                                echo "Test failed"
+                            }
                         }
-                        failure {
-                            echo "Test failed"
+                    }
+                    stage('Reporting github') {
+                        agent {
+                            docker {
+                                image 'at/reporting:latest'
+                                args '-v $HOME/vendor/bundle:/vendor/bundle'
+                            }
+                        }
+                        steps("Install gems") {
+                            unstash('github-report')
+                            sh "bundle install --path /vendor/bundle"
+                        }
+                        post {
+                            success {
+                                sh "bundle exec danger --danger_id=GitDangerFile"
+                            }
                         }
                     }
                 }
+
                 stage('Validate code') {
                     when {
                         not {
