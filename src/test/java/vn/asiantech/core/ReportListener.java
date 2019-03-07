@@ -94,7 +94,6 @@ public class ReportListener extends TestListenerAdapter {
         deleteFiles();
 
         totalFeatures = resultFeatures.size();
-        System.out.println("Sum of features: " + totalFeatures);
         for (Object resultFeature : resultFeatures) {
             boolean isFeaturePassed = true;
             JSONObject feature = (JSONObject) resultFeature;
@@ -133,7 +132,6 @@ public class ReportListener extends TestListenerAdapter {
                     }
                     totalDuration += duration;
                 }
-                System.out.println("vo11111111");
                 if (elementObject.get("type").equals("scenario")) {
                     JSONArray steps = (JSONArray) elementObject.get("steps");
                     boolean isScenarioPassed = true;
@@ -164,15 +162,6 @@ public class ReportListener extends TestListenerAdapter {
                 featureFailed++;
             }
         }
-
-        System.out.println("Sum of scenarios: " + totalScenarios);
-        System.out.println("Sum of steps: " + totalSteps);
-        System.out.println("Sum of step passed: " + stepPassed);
-        System.out.println("Sum of step failed: " + stepFailed);
-        System.out.println("Sum of scenario passed: " + scenarioPassed);
-        System.out.println("Sum of scenario failed: " + scenarioFailed);
-        System.out.println("Sum of feature passed: " + featurePassed);
-        System.out.println("Sum of feature failed: " + scenarioFailed);
         generateJsonReport();
     }
 
