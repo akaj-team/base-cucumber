@@ -188,7 +188,7 @@ public class ReportListener extends TestListenerAdapter {
     }
 
     private String getTime(long microSecond) {
-        long miliSecond = microSecond / 1000;
+        long miliSecond = microSecond / 1000000;
         return DurationFormatUtils.formatDuration(miliSecond, "HH:mm:ss,SSS");
     }
 
@@ -223,10 +223,14 @@ public class ReportListener extends TestListenerAdapter {
         featureObject.put("featurePassed", featurePassed);
         featureObject.put("featureFailed", featureFailed);
 
+        JSONObject durationObject = new JSONObject();
+        durationObject.put("totalDuration", totalTime);
+
         JSONObject report = new JSONObject();
         report.put("features", featureObject);
         report.put("scenarios", scenarioObject);
         report.put("steps", stepObject);
+        report.put("durations", durationObject);
         Files.write(Paths.get("target/GitHubReport.json"), report.toJSONString().getBytes());
     }
 }

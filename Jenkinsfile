@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Stash source code') {
+            steps {
+                stash includes: '**', name: 'source-code'
+            }
+        }
         stage('Run Tests') {
             parallel {
                 stage("Build") {
@@ -38,7 +43,9 @@ pipeline {
                                     args '-v $HOME/vendor/bundle:/vendor/bundle'
                                 }
                             }
+                            options { skipDefaultCheckout() }
                             steps("Install gems") {
+                                unstash('source-code')
                                 unstash('cucumber-report')
                                 sh "bundle install --path /vendor/bundle"
                             }
@@ -75,7 +82,9 @@ pipeline {
                                     args '-v $HOME/vendor/bundle:/vendor/bundle'
                                 }
                             }
-                            steps("Install gems") {
+                            options { skipDefaultCheckout() }
+                            steps("Preparing source code & Installing gems") {
+                                unstash('source-code')
                                 unstash('checkstyle')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
