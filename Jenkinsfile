@@ -26,7 +26,12 @@ pipeline {
                                 }
                             }
                         }
-                        stage('Reporting github') {
+                        stage('Cucumber Report') {
+                            when {
+                                not {
+                                    environment name: 'CHANGE_ID', value: ''
+                                }
+                            }
                             agent {
                                 docker {
                                     image 'at/reporting:latest'
