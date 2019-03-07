@@ -17,22 +17,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportListener extends TestListenerAdapter {
-    private long totalScenarios = 0;
-    private long totalSteps = 0;
     private long totalFeatures = 0;
-    private long totalTime = 0;
-
     private long featurePassed = 0;
-    private long stepPassed = 0;
-    private long scenarioPassed = 0;
-
-    private long scenarioFailed = 0;
     private long featureFailed = 0;
-    private long stepFailed = 0;
 
+    private long totalScenarios = 0;
+    private long scenarioPassed = 0;
+    private long scenarioFailed = 0;
+
+    private long totalSteps = 0;
+    private long stepPassed = 0;
+    private long stepFailed = 0;
     private long stepSkipped = 0;
     private long stepPending = 0;
     private long stepUndefined = 0;
+
+    private long totalDuration = 0;
+    private long passedDuration = 0;
+    private long failedDuration = 0;
+    private long skipDuration = 0;
+    private long pendingDuration = 0;
+    private long undefineDuration = 0;
+
 
     private File[] files;
 
@@ -86,10 +92,42 @@ public class ReportListener extends TestListenerAdapter {
         totalFeatures = resultFeatures.size();
         System.out.println("Sum of features: " + totalFeatures);
         for (Object resultFeature : resultFeatures) {
+            boolean isFeaturePassed = true;
             JSONObject feature = (JSONObject) resultFeature;
             JSONArray elements = (JSONArray) feature.get("elements");
             for (Object element : elements) {
                 JSONObject elementObject = (JSONObject) element;
+                JSONArray allSteps = (JSONArray) elementObject.get("steps");
+                totalSteps += allSteps.size();
+                for (Object step : allSteps) {
+                    JSONObject stepObject = (JSONObject) step;
+                    JSONObject resultObject = (JSONObject) stepObject.get("result");
+                    String status = (String) resultObject.get("status");
+                    long duration = (long) resultObject.get("duration");
+                    totalDuration += duration;
+                    switch (status) {
+                        case "failed":
+                            stepFailed++;
+                            failedDuration += duration;
+                            break;
+                        case "skipped":
+                            stepSkipped++;
+                            skipDuration += duration;
+                            break;
+                        case "pending":
+                            stepPending++;
+                            pendingDuration += duration;
+                            break;
+                        case "undefined":
+                            stepUndefined++;
+                            undefineDuration += duration;
+                            break;
+                        default:
+                            stepPassed++;
+                            passedDuration += duration;
+                            break;
+                    }
+                }
                 if (elementObject.get("type").equals("scenario")) {
                     JSONArray steps = (JSONArray) elementObject.get("steps");
                     boolean isPassed = true;
@@ -97,73 +135,21 @@ public class ReportListener extends TestListenerAdapter {
                         JSONObject stepObject = (JSONObject) step;
                         JSONObject resultObject = (JSONObject) stepObject.get("result");
                         String status = (String) resultObject.get("status");
-                        if (!status.equals("passed")) {
+                        if (!status.equals("passed") && isPassed) {
                             isPassed = false;
-                            break;
                         }
                     }
                     if (isPassed) {
                         scenarioPassed++;
                     } else {
                         scenarioFailed++;
-                    }
-                }
-
-                if (elementObject.get("type").equals("scenario")) {
-                    totalScenarios++;
-                }
-
-                JSONArray steps = (JSONArray) elementObject.get("steps");
-                totalSteps += steps.size();
-                for (Object step : steps) {
-                    JSONObject stepObject = (JSONObject) step;
-                    JSONObject resultObject = (JSONObject) stepObject.get("result");
-                    String status = (String) resultObject.get("status");
-                    long duration = (long) resultObject.get("duration");
-                    totalTime += duration;
-                    switch (status) {
-                        case "failed":
-                            stepFailed++;
-                            break;
-                        case "skipped":
-                            stepSkipped++;
-                            break;
-                        case "pending":
-                            stepPending++;
-                            break;
-                        case "undefined":
-                            stepUndefined++;
-                            break;
-                        default:
-                            stepPassed++;
-                            break;
-                    }
-                }
-            }
-        }
-
-        for (Object resultFeature : resultFeatures) {
-            boolean isFeaturePassed = true;
-            JSONObject feature = (JSONObject) resultFeature;
-            JSONArray elements = (JSONArray) feature.get("elements");
-            for (Object element : elements) {
-                JSONObject elementObject = (JSONObject) element;
-                if (elementObject.get("type").equals("scenario")) {
-                    JSONArray steps = (JSONArray) elementObject.get("steps");
-                    boolean isPassed = true;
-                    for (Object step : steps) {
-                        JSONObject stepObject = (JSONObject) step;
-                        JSONObject resultObject = (JSONObject) stepObject.get("result");
-                        String status = (String) resultObject.get("status");
-                        if (!status.equals("passed")) {
-                            isPassed = false;
-                            break;
+                        if (isFeaturePassed) {
+                            isFeaturePassed = false;
                         }
                     }
-                    if (!isPassed) {
-                        isFeaturePassed = false;
-                        break;
-                    }
+                }
+                if (elementObject.get("type").equals("scenario")) {
+                    totalScenarios++;
                 }
             }
             if (isFeaturePassed) {
@@ -172,17 +158,7 @@ public class ReportListener extends TestListenerAdapter {
                 featureFailed++;
             }
         }
-
-        System.out.println("Sum of scenarios: " + totalScenarios);
-        System.out.println("Sum of steps: " + totalSteps);
-        System.out.println("Sum of step passed: " + stepPassed);
-        System.out.println("Sum of step failed: " + stepFailed);
-        System.out.println("Sum of scenario passed: " + scenarioPassed);
-        System.out.println("Sum of scenario failed: " + scenarioFailed);
-        System.out.println("Sum of feature passed: " + featurePassed);
-        System.out.println("Sum of feature failed: " + scenarioFailed);
-        System.out.println("Sum of duration: " + getTime(totalTime));
-        createGitReport();
+        generateJsonReport();
     }
 
     private JSONArray getFeatures(final FileReader file) throws IOException, ParseException {
@@ -191,8 +167,8 @@ public class ReportListener extends TestListenerAdapter {
         return (JSONArray) object;
     }
 
-    private String getTime(long microSecond) {
-        long miliSecond = microSecond / 1000000;
+    private String getTime(long nanoSecond) {
+        long miliSecond = nanoSecond / 1000000;
         return DurationFormatUtils.formatDuration(miliSecond, "HH:mm:ss,SSS");
     }
 
@@ -207,27 +183,32 @@ public class ReportListener extends TestListenerAdapter {
         }
     }
 
-    private void createGitReport() throws IOException {
+    private void generateJsonReport() throws IOException {
         JSONObject step = new JSONObject();
         step.put("totalSteps", totalSteps);
-        step.put("stepPassed", stepPassed);
-        step.put("stepFailed", stepFailed);
-        step.put("stepSkipped", stepSkipped);
-        step.put("stepPending", stepPending);
-        step.put("stepUndefined", stepUndefined);
+        step.put("passedStep", stepPassed);
+        step.put("failedStep", stepFailed);
+        step.put("skippedStep", stepSkipped);
+        step.put("pendingStep", stepPending);
+        step.put("undefinedStep", stepUndefined);
 
         JSONObject scenario = new JSONObject();
         scenario.put("totalScenarios", totalScenarios);
-        scenario.put("scenarioPassed", scenarioPassed);
-        scenario.put("scenarioFailed", scenarioFailed);
+        scenario.put("passedScenario", scenarioPassed);
+        scenario.put("failedScenario", scenarioFailed);
 
         JSONObject feature = new JSONObject();
         feature.put("totalFeatures", totalFeatures);
-        feature.put("featurePassed", featurePassed);
-        feature.put("featureFailed", featureFailed);
+        feature.put("passedFeature", featurePassed);
+        feature.put("failedFeature", featureFailed);
 
         JSONObject duration = new JSONObject();
-        duration.put("totalDuration", getTime(totalTime));
+        duration.put("totalDuration", getTime(totalDuration));
+        duration.put("passedDuration", getTime(passedDuration));
+        duration.put("failedDuration", getTime(failedDuration));
+        duration.put("skippedDuration", getTime(skipDuration));
+        duration.put("pendingDuration", getTime(pendingDuration));
+        duration.put("undefinedDuration", getTime(undefineDuration));
 
         JSONObject report = new JSONObject();
         report.put("features", feature);
