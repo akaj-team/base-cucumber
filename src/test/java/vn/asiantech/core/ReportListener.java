@@ -224,7 +224,7 @@ public class ReportListener extends TestListenerAdapter {
         featureObject.put("featureFailed", featureFailed);
 
         JSONObject durationObject = new JSONObject();
-        durationObject.put("totalDuration", totalTime);
+        durationObject.put("totalDuration", getTime(totalTime));
 
         JSONObject report = new JSONObject();
         report.put("features", featureObject);

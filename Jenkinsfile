@@ -31,7 +31,7 @@ pipeline {
                                 }
                             }
                         }
-                        stage('Cucumber Report') {
+                        stage('Export reports') {
                             when {
                                 not {
                                     environment name: 'CHANGE_ID', value: ''

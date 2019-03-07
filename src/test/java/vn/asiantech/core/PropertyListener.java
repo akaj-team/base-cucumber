@@ -10,10 +10,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
+/**
+ * PropertyListener
+ */
 public class PropertyListener extends TestListenerAdapter {
 
     @Override
-    public void onFinish(ITestContext context) {
+    public void onFinish(final ITestContext context) {
         super.onFinish(context);
         RemoteWebDriver driver = (RemoteWebDriver) context.getAttribute("webDriver");
         Properties prop = new Properties();
