@@ -198,7 +198,7 @@ public class ReportListener extends TestListenerAdapter {
         return dir.listFiles((dir1, name) -> name.endsWith(".json"));
     }
 
-    private void deleteFiles(){
+    private void deleteFiles() {
         for (int i = 1; i < files.length; i++) {
             files[i].delete();
         }
@@ -206,6 +206,7 @@ public class ReportListener extends TestListenerAdapter {
 
     private void createGitReport() throws IOException {
         JSONObject stepObject = new JSONObject();
+
         stepObject.put("totalSteps", totalSteps);
         stepObject.put("stepPassed", stepPassed);
         stepObject.put("stepFailed", stepFailed);
@@ -223,10 +224,10 @@ public class ReportListener extends TestListenerAdapter {
         featureObject.put("featurePassed", featurePassed);
         featureObject.put("featureFailed", featureFailed);
 
-        JSONArray report = new JSONArray();
-        report.add(featureObject);
-        report.add(scenarioObject);
-        report.add(stepObject);
-        Files.write(Paths.get("target/git-report/GitHubReport.json"), report.toJSONString().getBytes());
+        JSONObject report = new JSONObject();
+        report.put("features", featureObject);
+        report.put("scenarios", scenarioObject);
+        report.put("steps", stepObject);
+        Files.write(Paths.get("target/GitHubReport.json"), report.toJSONString().getBytes());
     }
 }

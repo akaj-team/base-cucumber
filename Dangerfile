@@ -10,7 +10,8 @@ checkstyle_format.base_path = (Dir.pwd).gsub(/@.*/,'')
 checkstyle_format.report 'target/checkstyle.xml'
 
 # Read and show report
-message = "Features | Scenarios| Steps|\n"
+message = " | Features | Scenarios |Steps |\n"
+message << "--- |--- | --- | --- |\n"
 end
 reportJsonFile = "target/GitHubReport.json"
 if(File.file?(reportJsonFile))
