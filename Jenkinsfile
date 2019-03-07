@@ -18,6 +18,7 @@ pipeline {
                         }
 
                         success {
+                            sh 'bundle exec danger'
                             echo "Test succeeded"
                         }
                         failure {
