@@ -18,6 +18,7 @@ pipeline {
 
                         success {
                             echo "Test succeeded"
+                            stash includes: 'target/GitHubReport.json', name: 'GitHubReport'
                         }
                         failure {
                             echo "Test failed"
@@ -50,6 +51,7 @@ pipeline {
                             }
                             steps("Install gems") {
                                 unstash('checkstyle')
+                                unstash('GitHubReport')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
                             }
