@@ -1,7 +1,7 @@
 # Read and show report
 require 'json'
 
-messages = "|test|Feature|Scenarios|Steps|"
+messages = "|test|Feature|Scenarios|Steps|\n"
 messages << "|--- | --- |---|---|\n"
 #if(File.file?(reportJsonFile))
    #file = File.read(reportJsonFile)
