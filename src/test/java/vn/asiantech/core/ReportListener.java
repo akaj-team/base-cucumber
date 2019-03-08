@@ -72,6 +72,11 @@ public class ReportListener extends TestListenerAdapter {
 
         for (int pos = 1; pos < files.length; pos++) {
             JSONArray fileFeatures = getFeatures(new FileReader(files[pos].getPath()));
+            if (resultFeatures.size() == 0) {
+                resultFeatures = fileFeatures;
+            } else {
+                break;
+            }
             for (int i = 0; i < size; i++) {
                 for (Object fileFeature : fileFeatures) {
                     JSONObject mergeObject = (JSONObject) resultFeatures.get(i);
