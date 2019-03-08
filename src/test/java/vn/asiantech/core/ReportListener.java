@@ -20,6 +20,7 @@ import java.util.List;
  * ReportListener
  */
 public class ReportListener extends TestListenerAdapter {
+    private static final int TIME_NANO_SECOND = 1000000;
     private File[] files;
     private JSONArray resultFeatures;
 
@@ -207,8 +208,8 @@ public class ReportListener extends TestListenerAdapter {
         System.out.println("Generate cucumber report for github success.");
     }
 
-    private String getFormatDuration(long nanoSecond) {
-        long miliSecond = nanoSecond / 1000000;
+    private String getFormatDuration(final long nanoSecond) {
+        long miliSecond = nanoSecond / TIME_NANO_SECOND;
         return DurationFormatUtils.formatDuration(miliSecond, "HH:mm:ss.SSS");
     }
 
