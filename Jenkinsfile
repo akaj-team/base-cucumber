@@ -13,7 +13,7 @@ pipeline {
                     stages {
                         stage('Run cucumber') {
                             steps {
-                                sh 'run-test.sh chrome 20'
+                                sh 'run-test.sh firefox 15'
                             }
                             post {
                                 always {
