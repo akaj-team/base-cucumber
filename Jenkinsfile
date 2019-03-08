@@ -24,6 +24,7 @@ pipeline {
 
                                 success {
                                     echo "Test succeeded"
+                                    sh 'printenv'
                                     stash includes: 'target/GitHubReport.json', name: 'cucumber-report'
                                 }
                                 failure {
