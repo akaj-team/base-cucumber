@@ -17,7 +17,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: 'target/**'
+                                    archiveArtifacts artifacts: 'target/cucumber-reports/,target/screenshots/,target/GitHubReport.json'
                                     junit 'target/cucumber-reports/*.xml'
                                     cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
                                     stash includes: 'target/GitHubReport.json', name: 'cucumber-report'
