@@ -20,11 +20,11 @@ pipeline {
                                     archiveArtifacts artifacts: 'target/**'
                                     junit 'target/cucumber-reports/*.xml'
                                     cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-                                    stash includes: 'target/GitHubReport.json', name: 'cucumber-report'
                                 }
 
                                 success {
                                     echo "Test succeeded"
+                                    stash includes: 'target/GitHubReport.json', name: 'cucumber-report'
                                 }
                                 failure {
                                     echo "Test failed"
