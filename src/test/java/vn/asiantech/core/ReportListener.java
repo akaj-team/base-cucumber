@@ -109,7 +109,10 @@ public class ReportListener extends TestListenerAdapter {
                     JSONObject stepObject = (JSONObject) step;
                     JSONObject resultObject = (JSONObject) stepObject.get("result");
                     String status = (String) resultObject.get("status");
-                    long duration = (long) resultObject.get("duration");
+                    long duration = 0;
+                    if (resultObject.containsKey("duration")) {
+                        duration = (long) resultObject.get("duration");
+                    }
                     switch (status) {
                         case "passed":
                             stepPassed++;
