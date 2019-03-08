@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Stash source code') {
             steps {
-                stash includes: '**', name: 'source-code'
+                stash includes: '**', name: 'source-code', useDefaultExcludes: false
             }
         }
         stage('Run Tests') {
