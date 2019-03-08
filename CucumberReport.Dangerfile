@@ -11,7 +11,7 @@ if(File.file?(reportJsonFile))
       messages << "|Scenarios|#{data['scenarios']['passedScenario']}|#{data['scenarios']['failedScenario']}|0|0|0|#{data['scenarios']['totalScenarios']}|\n"
       messages << "|Steps|#{data['steps']['passedStep']}|#{data['steps']['failedStep']}|#{data['steps']['skippedStep']}|#{data['steps']['pendingStep']}|#{data['steps']['undefinedStep']}|#{data['steps']['totalSteps']}|\n"
       messages << "|Duration|#{data['durations']['passedDuration']}|#{data['durations']['failedDuration']}|#{data['durations']['skippedDuration']}|#{data['durations']['pendingDuration']}|#{data['durations']['undefinedDuration']}|#{data['durations']['totalDuration']}|\n"
-    markdown messages
+    markdown messages unless data['features']['totalFeatures'] <= 0
 else
     warn("Can not find json report file: #{reportJsonFile}")
 end
