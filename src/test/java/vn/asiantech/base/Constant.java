@@ -19,9 +19,7 @@ public final class Constant {
             new Account("stg.tu.le.2@asiantech.vn", "Abc123@@"),
             new Account("stg.thien.dang2@asiantech.vn", "Abc123@@"),
             new Account("stg.hang.nguyen@asiantech.vn", "Abc123@@"),
-            new Account("stg.lam.le2@asiantech.vn", "Abc123@@"),
-            new Account("automation-01@asiantech.vn", "Abc123@@"),
-            new Account("automation-02@asiantech.vn", "Abc123@@")
+            new Account("stg.lam.le2@asiantech.vn", "Abc123@@")
     };
 
     private Constant() {

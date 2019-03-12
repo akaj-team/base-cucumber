@@ -19,7 +19,7 @@ public abstract class BasePage<T> {
 
     public abstract T open(WebDriver webDriver);
 
-    public WebDriver getDriver() {
+    protected final WebDriver getDriver() {
         return driver;
     }
 
