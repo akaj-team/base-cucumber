@@ -25,7 +25,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     @Override
-    public final LoginPage navigateTo(final WebDriver webDriver) {
+    public final LoginPage open(final WebDriver webDriver) {
         webDriver.get(LOGIN_PAGE_URL);
         return this;
     }

@@ -11,11 +11,13 @@ import java.util.List;
 
 public abstract class BasePage<T> {
 
+    protected WebDriver driver;
+
     public BasePage(final WebDriver driver) {
-        //no-up
+        this.driver = driver;
     }
 
-    public abstract T navigateTo(WebDriver webDriver);
+    public abstract T open(WebDriver webDriver);
 
     protected final boolean isElementPresented(final WebElement element) {
         try {

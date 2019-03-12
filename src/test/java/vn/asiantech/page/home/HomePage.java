@@ -38,15 +38,12 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(name = "search")
     private WebElement inputSearch;
 
-    private WebDriver driver;
-
     public HomePage(final WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     @Override
-    public final HomePage navigateTo(final WebDriver webDriver) {
+    public final HomePage open(final WebDriver webDriver) {
         webDriver.get(HOME_PAGE_URL);
         return this;
     }
