@@ -57,7 +57,7 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     public final void waitForWelcomeMessage() {
-        waitForElement(driver, txtWelcome);
+        waitForElement(getDriver(), txtWelcome);
     }
 
     public final void logout() {
@@ -100,7 +100,7 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     public final void sendKeysSearch(final String valueSearch) {
-        waitForElement(driver, inputSearch);
+        waitForElement(getDriver(), inputSearch);
         inputSearch.sendKeys(valueSearch);
     }
 
@@ -195,9 +195,9 @@ public class HomePage extends BasePage<HomePage> {
     private void scrollElementContent(final List<WebElement> listElementContent, final boolean isDown) {
         if (listElementContent.size() > 0) {
             if (isDown) {
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(listElementContent.size() - 1));
+                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(listElementContent.size() - 1));
             } else {
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(0));
+                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(0));
             }
         }
     }

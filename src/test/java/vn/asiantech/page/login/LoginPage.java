@@ -17,11 +17,8 @@ public class LoginPage extends BasePage<LoginPage> {
     @FindBy(className = "text-danger")
     private WebElement errorText;
 
-    private WebDriver driver;
-
     public LoginPage(final WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     @Override
@@ -46,7 +43,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public final void waitForLoginButton() {
-        waitForElement(driver, loginButton);
+        waitForElement(getDriver(), loginButton);
     }
 
     public final boolean hasEmail() {
@@ -66,6 +63,6 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public final void waitForErrorMessage() {
-        waitForElement(driver, errorText);
+        waitForElement(getDriver(), errorText);
     }
 }
