@@ -1,4 +1,4 @@
-package vn.asiantech.core;
+package at.core;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;

@@ -1,15 +1,14 @@
-package vn.asiantech.page.home;
+package app.pages.home;
 
+import app.utils.Constant;
+import at.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import vn.asiantech.base.BasePage;
 
 import java.util.List;
-
-import static vn.asiantech.base.Constant.HOME_PAGE_URL;
 
 /**
  * Copyright © 2018 Asian Tech Co., Ltd.
@@ -38,16 +37,13 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(name = "search")
     private WebElement inputSearch;
 
-    private WebDriver driver;
-
     public HomePage(final WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     @Override
-    public final HomePage navigateTo(final WebDriver webDriver) {
-        webDriver.get(HOME_PAGE_URL);
+    public final HomePage open() {
+        getDriver().get(Constant.HOME_PAGE_URL);
         return this;
     }
 
@@ -60,7 +56,7 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     public final void waitForWelcomeMessage() {
-        waitForElement(driver, txtWelcome);
+        waitForElement(getDriver(), txtWelcome);
     }
 
     public final void logout() {
@@ -103,7 +99,7 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     public final void sendKeysSearch(final String valueSearch) {
-        waitForElement(driver, inputSearch);
+        waitForElement(getDriver(), inputSearch);
         inputSearch.sendKeys(valueSearch);
     }
 
@@ -198,9 +194,9 @@ public class HomePage extends BasePage<HomePage> {
     private void scrollElementContent(final List<WebElement> listElementContent, final boolean isDown) {
         if (listElementContent.size() > 0) {
             if (isDown) {
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(listElementContent.size() - 1));
+                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(listElementContent.size() - 1));
             } else {
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(0));
+                ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", listElementContent.get(0));
             }
         }
     }

@@ -1,4 +1,4 @@
-package vn.asiantech.core;
+package at.core;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -1,12 +1,12 @@
 import cucumber.api.CucumberOptions;
-import vn.asiantech.core.CucumberRunnerBase;
+import at.core.CucumberRunnerBase;
 
 /**
  * DefaultTestRunner
  */
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = {"stepdefs"},
+        glue = {"app/stepdefs"},
         tags = {"not @Ignore"},
         plugin = {
                 "pretty",

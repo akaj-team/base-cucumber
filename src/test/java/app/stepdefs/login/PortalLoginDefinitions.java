@@ -1,17 +1,16 @@
-package stepdefs.login;
+package app.stepdefs.login;
 
+import app.pages.home.HomePage;
+import app.pages.login.LoginPage;
+import app.utils.Constant;
+import at.base.BaseDefinitions;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import vn.asiantech.base.BaseDefinitions;
-import vn.asiantech.page.home.HomePage;
-import vn.asiantech.page.login.LoginPage;
-
-import static vn.asiantech.base.Constant.DEFAULT_TIME_OUT;
-import static vn.asiantech.base.Constant.LOGIN_PAGE_URL;
 
 public class PortalLoginDefinitions extends BaseDefinitions implements En {
     private LoginPage loginPage;
@@ -19,10 +18,10 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
 
     public PortalLoginDefinitions() {
         clearCookies();
-        Given("^I open login page$", () -> getDriver().get(LOGIN_PAGE_URL));
+        Given("^I open login page$", () -> getDriver().get(Constant.LOGIN_PAGE_URL));
 
         Then("^Browser should redirect to \"([^\"]*)\"$", (String path) -> {
-            new WebDriverWait(getDriver(), DEFAULT_TIME_OUT).until(
+            new WebDriverWait(getDriver(), Constant.DEFAULT_TIME_OUT).until(
                     webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
             try {
                 getDriver().findElement(By.id("btn-logout")).click();
@@ -37,11 +36,11 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
 
         Given("^I enter my username$", () -> {
             if (loginPage.hasEmail()) {
-                loginPage.withUsername(getAccount().email);
+                loginPage.withUsername(Constant.ACCOUNT_LOGIN[0].email);
             }
         });
 
-        And("^I fill in password$", () -> loginPage.withPassword(getAccount().password));
+        And("^I fill in password$", () -> loginPage.withPassword(Constant.ACCOUNT_LOGIN[0].password));
 
         Given("^I enter my username with \"([^\"]*)\"$", (String email) -> {
             if (loginPage.hasEmail()) {

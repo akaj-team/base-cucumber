@@ -1,4 +1,4 @@
-package vn.asiantech.object;
+package app.objects;
 
 /**
  * @author tien.hoang

@@ -1,4 +1,4 @@
-package vn.asiantech.core;
+package at.core;
 
 import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;

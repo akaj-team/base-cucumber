@@ -1,13 +1,13 @@
-package stepdefs.login;
+package app.stepdefs.login;
 
+import app.pages.login.LoginPage;
+import app.utils.Constant;
 import cucumber.api.java8.En;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.testng.Assert;
-import vn.asiantech.base.BaseDefinitions;
-import vn.asiantech.base.Constant;
-import vn.asiantech.page.home.HomePage;
-import vn.asiantech.page.login.LoginPage;
+import at.base.BaseDefinitions;
+import app.pages.home.HomePage;
 
 public class AuthenticateDefinitions extends BaseDefinitions implements En {
 
@@ -20,7 +20,7 @@ public class AuthenticateDefinitions extends BaseDefinitions implements En {
             if (!isButtonLogoutDisplayed()) {
                 getDriver().get(Constant.LOGIN_PAGE_URL);
                 loginPage.waitForLoginButton();
-                loginPage.withUsername(getAccount().email).withPassword(getAccount().password).login();
+                loginPage.withUsername(Constant.ACCOUNT_LOGIN[0].email).withPassword(Constant.ACCOUNT_LOGIN[0].password).login();
 
                 homePage.waitForWelcomeMessage();
                 Assert.assertTrue(homePage.welcomeTestIsDisplayed());

@@ -1,5 +1,6 @@
-package vn.asiantech.base;
+package at.base;
 
+import app.utils.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -11,11 +12,13 @@ import java.util.List;
 
 public abstract class BasePage<T> {
 
+    private WebDriver driver;
+
     public BasePage(final WebDriver driver) {
-        //no-up
+        this.driver = driver;
     }
 
-    public abstract T navigateTo(WebDriver webDriver);
+    public abstract T open();
 
     protected final boolean isElementPresented(final WebElement element) {
         try {
@@ -24,6 +27,10 @@ public abstract class BasePage<T> {
             return false;
         }
         return true;
+    }
+
+    protected WebDriver getDriver() {
+        return driver;
     }
 
     protected void waitForElement(WebDriver webDriver, WebElement element) {

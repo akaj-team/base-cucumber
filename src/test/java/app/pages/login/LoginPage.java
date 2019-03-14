@@ -1,11 +1,11 @@
-package vn.asiantech.page.login;
+package app.pages.login;
 
+import at.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import vn.asiantech.base.BasePage;
 
-import static vn.asiantech.base.Constant.LOGIN_PAGE_URL;
+import static app.utils.Constant.LOGIN_PAGE_URL;
 
 public class LoginPage extends BasePage<LoginPage> {
     @FindBy(css = "input[formcontrolname=email]")
@@ -17,16 +17,13 @@ public class LoginPage extends BasePage<LoginPage> {
     @FindBy(className = "text-danger")
     private WebElement errorText;
 
-    private WebDriver driver;
-
     public LoginPage(final WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
     @Override
-    public final LoginPage navigateTo(final WebDriver webDriver) {
-        webDriver.get(LOGIN_PAGE_URL);
+    public final LoginPage open() {
+        getDriver().get(LOGIN_PAGE_URL);
         return this;
     }
 
@@ -46,7 +43,7 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public final void waitForLoginButton() {
-        waitForElement(driver, loginButton);
+        waitForElement(getDriver(), loginButton);
     }
 
     public final boolean hasEmail() {
@@ -66,6 +63,6 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public final void waitForErrorMessage() {
-        waitForElement(driver, errorText);
+        waitForElement(getDriver(), errorText);
     }
 }

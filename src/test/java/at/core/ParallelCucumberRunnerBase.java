@@ -1,6 +1,5 @@
-package vn.asiantech.core;
+package at.core;
 
-import cucumber.api.testng.AbstractTestNGCucumberTests;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -8,10 +7,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 
 /**
- * CucumberRunnerBase
+ * ParallelCucumberRunnerBase
  */
 @Listeners({ScreenShotListener.class, PropertyListener.class, ReportListener.class})
-public class CucumberRunnerBase extends AbstractTestNGCucumberTests {
+public class ParallelCucumberRunnerBase extends CustomAbstractTestNGCucumberTests {
 
     @DataProvider
     public Object[][] features() {
@@ -20,7 +19,7 @@ public class CucumberRunnerBase extends AbstractTestNGCucumberTests {
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass(final ITestContext context) throws Exception {
-        super.setUpClass();
+        super.setUpClass(context);
         DriverFactory.instance.startDriver(context);
     }
 

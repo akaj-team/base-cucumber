@@ -1,13 +1,12 @@
 import cucumber.api.CucumberOptions;
-import org.testng.annotations.Test;
-import vn.asiantech.core.ParallelCucumberRunnerBase;
+import at.core.ParallelCucumberRunnerBase;
 
 /**
  * Do not change this file
  */
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = {"stepdefs"},
+        glue = {"app/stepdefs"},
         tags = {"not @Ignore"},
         plugin = {
                 "pretty",

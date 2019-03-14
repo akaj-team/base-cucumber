@@ -1,23 +1,19 @@
-package vn.asiantech.core;
+package at.core;
 
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.xml.XmlTest;
-import vn.asiantech.base.Constant;
-import vn.asiantech.object.Account;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
-import static vn.asiantech.core.DriverType.*;
+import static at.core.DriverType.*;
 
 /**
  * DriverFactory
@@ -33,7 +29,6 @@ public class DriverFactory {
     private static final String BROWSER_OPERA = "opera";
 
     public static DriverFactory instance = new DriverFactory();
-    private static List<Integer> busyAccounts = new ArrayList<>();
     private static RemoteWebDriver driver;
     private final String operatingSystem = System.getProperty("os.name").toUpperCase();
     private final String systemArchitecture = System.getProperty("os.arch");
@@ -42,7 +37,6 @@ public class DriverFactory {
     private final Integer proxyPort = Integer.getInteger("proxyPort");
     private final String proxyDetails = String.format("%s:%d", proxyHostname, proxyPort);
     private ThreadLocal<RemoteWebDriver> driverFactoryThread = new ThreadLocal<>();
-    private ThreadLocal<Account> accountThread = new ThreadLocal<>();
     private ITestContext context;
 
     private static Map<String, String> defaultParam() {
@@ -56,17 +50,6 @@ public class DriverFactory {
     public static final void closeDriver() {
         if (driver != null) {
             driver.quit();
-        }
-    }
-
-    private void initSessionAccounts() {
-        for (Account account : Constant.ACCOUNT_LOGIN) {
-            if (!busyAccounts.contains(account.hashCode())) {
-                busyAccounts.add(account.hashCode());
-                accountThread.set(account);
-                System.out.println("Using first login account: " + account.email);
-                break;
-            }
         }
     }
 
@@ -152,10 +135,6 @@ public class DriverFactory {
         }
     }
 
-    public final Account getAccountCanUse() {
-        return accountThread.get();
-    }
-
     public final synchronized RemoteWebDriver getDriver() {
         if (driverFactoryThread.get() == null) {
             XmlTest xmlTest = new XmlTest();
@@ -166,7 +145,6 @@ public class DriverFactory {
     }
 
     public synchronized void startDriver(final XmlTest xmlTest) {
-        initSessionAccounts();
         //get param suite
         String browserName = xmlTest.getParameter("browserName");
         String server = xmlTest.getParameter("server");
@@ -187,7 +165,6 @@ public class DriverFactory {
 
     public final void quitDriver() {
         if (driverFactoryThread.get() != null) {
-            busyAccounts.clear();
             driverFactoryThread.get().quit();
         }
     }

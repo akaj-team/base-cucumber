@@ -1,4 +1,4 @@
-package vn.asiantech.core;
+package at.core;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;

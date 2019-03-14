@@ -1,5 +1,7 @@
-package vn.asiantech.base;
+package at.base;
 
+import at.core.DriverFactory;
+import at.core.PageFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,13 +14,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import vn.asiantech.core.DriverFactory;
-import vn.asiantech.core.PageFactory;
-import vn.asiantech.object.Account;
+import app.utils.Constant;
 
 import java.lang.reflect.Field;
 
-import static vn.asiantech.base.Constant.DEFAULT_TIME_OUT;
+import static app.utils.Constant.DEFAULT_TIME_OUT;
 
 public class BaseDefinitions {
 
@@ -27,7 +27,7 @@ public class BaseDefinitions {
         try {
             DriverFactory.instance.getDriver().manage().deleteAllCookies();
         } catch (Exception ignored) {
-            System.out.println("Unable to clear cookies, driver object is not viable...");
+            System.out.println("Unable to clear cookies, driver objects is not viable...");
         }
     }
 
@@ -62,10 +62,6 @@ public class BaseDefinitions {
 
     protected final RemoteWebDriver getDriver() {
         return DriverFactory.instance.getDriver();
-    }
-
-    protected final Account getAccount() {
-        return DriverFactory.instance.getAccountCanUse();
     }
 
     protected <T> T initPage(WebDriver driver, Class<T> clazz) {

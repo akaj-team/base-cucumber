@@ -1,4 +1,4 @@
-package vn.asiantech.core;
+package at.core;
 
 import org.openqa.selenium.WebDriver;
 
