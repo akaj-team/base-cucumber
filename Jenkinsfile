@@ -1,3 +1,5 @@
+
+def APP_MODULE = "App"
 pipeline {
     agent any
 
@@ -17,10 +19,10 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: 'target/cucumber-reports/,target/screenshots/,target/GitHubReport.json'
-                                    junit 'target/cucumber-reports/*.xml'
-                                    cucumber fileIncludePattern: 'target/cucumber-reports/*.json', sortingMethod: 'ALPHABETICAL'
-                                    stash includes: 'target/GitHubReport.json', name: 'cucumber-report'
+                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
+                                    junit "${APP_MODULE}/target/cucumber-reports/*.xml"
+                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
+                                    stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                                 }
 
                                 success {
@@ -67,11 +69,12 @@ pipeline {
                     stages {
                         stage('Validate') {
                             steps {
+                                sh "mvn install -DskipTestse"
                                 sh "mvn validate"
                             }
                             post {
                                 success {
-                                    stash includes: 'target/checkstyle.xml', name: 'checkstyle'
+                                    stash includes: "${APP_MODULE}/target/checkstyle.xml", name: 'checkstyle'
                                 }
                             }
                         }

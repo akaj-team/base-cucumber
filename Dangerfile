@@ -7,4 +7,4 @@ warn("Big PR, try to keep changes smaller if you can") if git.lines_of_code > 50
 checkstyle_format.base_path = (Dir.pwd).gsub(/@.*/,'')
 
 # Report
-checkstyle_format.report 'target/checkstyle.xml'
+checkstyle_format.report 'App/target/checkstyle.xml'
