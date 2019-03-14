@@ -26,7 +26,7 @@
             <groupId>asiantech</groupId>
             <artifactId>Core</artifactId>
             <version>1.0</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -95,28 +95,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>net.masterthought</groupId>
-                        <artifactId>maven-cucumber-reporting</artifactId>
-                        <version>3.19.0</version>
-                        <executions>
-                            <execution>
-                                <id>execution</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>generate</goal>
-                                </goals>
-                                <configuration>
-                                    <projectName>AT-Portal</projectName>  <!-- Replace with project name -->
-                                    <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
-                                    <jsonFiles>**/*.json</jsonFiles>
-                                    <classificationFiles>**/browser.properties</classificationFiles>
-                                    <buildNumber>1</buildNumber>
-                                    <parallelTesting>false</parallelTesting>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
