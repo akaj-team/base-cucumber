@@ -34,7 +34,7 @@ pipeline {
                         }
                         stage('Export reports') {
                             environment {
-                                REPORT_IGNORE_FAIL = 'Environment'
+                                REPORT_IGNORE_FAIL = false
                             }
                             when {
                                 not {
@@ -52,6 +52,7 @@ pipeline {
                                 unstash('source-code')
                                 unstash('cucumber-report')
                                 sh "bundle install --path /vendor/bundle"
+                                sh "env"
                             }
                             post {
                                 success {
