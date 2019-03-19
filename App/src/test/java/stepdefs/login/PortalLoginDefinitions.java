@@ -1,8 +1,5 @@
 package stepdefs.login;
 
-import pages.home.HomePage;
-import pages.login.LoginPage;
-import utils.Constant;
 import at.base.BaseDefinitions;
 import cucumber.api.java8.En;
 import org.openqa.selenium.By;
@@ -10,6 +7,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import pages.home.HomePage;
+import pages.login.LoginPage;
+import utils.Constant;
 
 public class PortalLoginDefinitions extends BaseDefinitions implements En {
     private LoginPage loginPage;
@@ -47,25 +47,25 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
             }
         });
 
-//        And("^I fill in password with \"([^\"]*)\"$", (String pwd) -> loginPage.withPassword(pwd));
-//
-//        When("^I click on login button$", () -> loginPage.login());
-//
-//        Then("^I should see the welcome message$", () -> {
-//            homePage = initPage(getDriver(), HomePage.class);
-//            homePage.waitForWelcomeMessage();
-//            Assert.assertTrue(homePage.hasWelcomeMessage());
-//            Assert.assertTrue(homePage.welcomeTestIsDisplayed());
-//        });
-//
-//        Then("^Login button will be disabled$", () -> Assert.assertFalse(loginPage.getLoginButton().isEnabled()));
-//
-//        Then("^Error message should display and show \"([^\"]*)\"$", (String warning) -> {
-//            loginPage.waitForErrorMessage();
-//            Assert.assertTrue(loginPage.errorMessageIsDisplayed());
-//            Assert.assertEquals(warning, loginPage.getErrorMessage());
-//        });
-//
-//        Then("^I click on logout button$", () -> homePage.logout());
+        And("^I fill in password with \"([^\"]*)\"$", (String pwd) -> loginPage.withPassword(pwd));
+
+        When("^I click on login button$", () -> loginPage.login());
+
+        Then("^I should see the welcome message$", () -> {
+            homePage = initPage(getDriver(), HomePage.class);
+            homePage.waitForWelcomeMessage();
+            Assert.assertTrue(homePage.hasWelcomeMessage());
+            Assert.assertTrue(homePage.welcomeTestIsDisplayed());
+        });
+
+        Then("^Login button will be disabled$", () -> Assert.assertFalse(loginPage.getLoginButton().isEnabled()));
+
+        Then("^Error message should display and show \"([^\"]*)\"$", (String warning) -> {
+            loginPage.waitForErrorMessage();
+            Assert.assertTrue(loginPage.errorMessageIsDisplayed());
+            Assert.assertEquals(warning, loginPage.getErrorMessage());
+        });
+
+        Then("^I click on logout button$", () -> homePage.logout());
     }
 }

@@ -17,5 +17,5 @@ if(File.file?(reportJsonFile))
           fail("Having some features failed.")
       end
 else
-    warn("Can not find json report file: #{reportJsonFile}")
+    fail("Can not find json report file: #{reportJsonFile}")
 end
