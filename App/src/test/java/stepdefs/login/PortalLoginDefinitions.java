@@ -58,14 +58,14 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
 //            Assert.assertTrue(homePage.welcomeTestIsDisplayed());
 //        });
 
-        Then("^Login button will be disabled$", () -> Assert.assertFalse(loginPage.getLoginButton().isEnabled()));
-
-        Then("^Error message should display and show \"([^\"]*)\"$", (String warning) -> {
-            loginPage.waitForErrorMessage();
-            Assert.assertTrue(loginPage.errorMessageIsDisplayed());
-            Assert.assertEquals(warning, loginPage.getErrorMessage());
-        });
-
-        Then("^I click on logout button$", () -> homePage.logout());
+//        Then("^Login button will be disabled$", () -> Assert.assertFalse(loginPage.getLoginButton().isEnabled()));
+//
+//        Then("^Error message should display and show \"([^\"]*)\"$", (String warning) -> {
+//            loginPage.waitForErrorMessage();
+//            Assert.assertTrue(loginPage.errorMessageIsDisplayed());
+//            Assert.assertEquals(warning, loginPage.getErrorMessage());
+//        });
+//
+//        Then("^I click on logout button$", () -> homePage.logout());
     }
 }
