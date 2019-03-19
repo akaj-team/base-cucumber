@@ -1,4 +1,5 @@
 def APP_MODULE = "App"
+import net.masterthought.jenkins.CucumberReportPublisher.Classification
 pipeline {
     agent any
 
@@ -121,7 +122,6 @@ pipeline {
         }
     }
 }
-import net.masterthought.jenkins.CucumberReportPublisher.Classification
 
 ArrayList<Classification> getClassificationsFromFile() {
     ArrayList<Classification> classifications = Collections.emptyList()
