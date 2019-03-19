@@ -19,7 +19,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
+                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json,${APP_MODULE}/target/browser.properties"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
