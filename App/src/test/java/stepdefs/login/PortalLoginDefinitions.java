@@ -33,14 +33,6 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
             loginPage = initPage(getDriver(), LoginPage.class);
         });
 
-        Given("^I enter my username$", () -> {
-            if (loginPage.hasEmail()) {
-                loginPage.withUsername(Constant.ACCOUNT_LOGIN[0].email);
-            }
-        });
-
-        And("^I fill in password$", () -> loginPage.withPassword(Constant.ACCOUNT_LOGIN[0].password));
-
         Given("^I enter my username with \"([^\"]*)\"$", (String email) -> {
             if (loginPage.hasEmail()) {
                 loginPage.withUsername(email);
