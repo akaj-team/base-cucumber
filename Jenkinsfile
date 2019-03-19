@@ -74,7 +74,18 @@ pipeline {
                                 sh "mvn validate"
                                 step([
                                         $class         : 'CucumberReportPublisher',
-                                        classifications: getClassificationsFromFile()
+                                        classifications: getClassificationsFromFile(),
+                                        failedFeaturesNumber: 0,
+                                        failedScenariosNumber: 0,
+                                        failedStepsNumber: 0,
+                                        fileExcludePattern: '',
+                                        fileIncludePattern: '**/*.json',
+                                        jsonReportDirectory: 'testrun/reports',
+                                        parallelTesting: true,
+                                        pendingStepsNumber: 0,
+                                        skippedStepsNumber: 0,
+                                        trendsLimit: 0,
+                                        undefinedStepsNumber: 0
                                 ])
                             }
                             post {
@@ -109,10 +120,10 @@ pipeline {
         }
     }
 }
-
-ArrayList<Classification> getClassificationsFromFile() {
+static ArrayList<Classification> getClassificationsFromFile() {
     ArrayList<Classification> classifications = Collections.emptyList()
     classifications.add(new Classification("aaaa", "bbb"))
     return classifications
 }
+
 
