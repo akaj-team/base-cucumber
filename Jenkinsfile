@@ -1,5 +1,6 @@
-
 def APP_MODULE = "App"
+import net.masterthought.jenkins.CucumberReportPublisher.Classification
+
 pipeline {
     agent any
 
@@ -69,7 +70,7 @@ pipeline {
                     stages {
                         stage('Validate') {
                             steps {
-                                sh "mvn install -DskipTestse"
+                                sh "mvn install -DskipTests"
                                 sh "mvn validate"
                             }
                             post {
@@ -77,6 +78,13 @@ pipeline {
                                     stash includes: "${APP_MODULE}/target/checkstyle.xml", name: 'checkstyle'
                                 }
                             }
+                            echo "***** Publish Reports *****"
+                            def runClassifications = getClassificationsFromFile()
+                            println "runClassifications - " + runClassifications.toString()
+                            step([
+                                    $class         : 'CucumberReportPublisher',
+                                    classifications: runClassifications
+                            ])
                         }
                         stage('Reporting') {
                             agent {
@@ -104,3 +112,10 @@ pipeline {
         }
     }
 }
+
+ArrayList<Classification> getClassificationsFromFile() {
+    ArrayList<Classification> classifications = Collections.emptyList()
+    classifications.add(new Classification("aaaa", "bbb"))
+    return classifications
+}
+

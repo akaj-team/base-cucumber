@@ -110,7 +110,6 @@
                                 <configuration>
                                     <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
                                     <jsonFiles>**/*.json</jsonFiles>
-                                    <classificationFiles>**/browser.properties</classificationFiles>
                                     <buildNumber>1</buildNumber>
                                     <parallelTesting>false</parallelTesting>
                                 </configuration>
