@@ -99,9 +99,6 @@ pipeline {
                         }
 
                         stage("Publish Reports") {
-                            echo "***** Publish Reports *****"
-                            def runClassifications = getClassificationsFromFile()
-                            println "runClassifications - " + runClassifications
                             step([
                                     $class               : 'CucumberReportPublisher',
                                     classifications      : getClassificationsFromFile(),
