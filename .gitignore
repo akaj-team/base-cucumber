@@ -14,6 +14,5 @@ src/test/resources/driver/
 .DS_Store
 tmp
 jsontarget/
-App/src/test/java/generate/
-Core/src/test/java/generate/
+/src/test/java/generate/
 target/
