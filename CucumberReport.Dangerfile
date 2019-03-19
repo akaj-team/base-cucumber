@@ -1,5 +1,6 @@
 # Read and show report
 require 'json'
+require 'env'
 
 reportJsonFile = "App/target/GitHubReport.json"
 if(File.file?(reportJsonFile))
