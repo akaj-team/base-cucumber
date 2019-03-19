@@ -20,8 +20,7 @@ public class AuthenticateDefinitions extends BaseDefinitions implements En {
             if (!isButtonLogoutDisplayed()) {
                 getDriver().get(Constant.LOGIN_PAGE_URL);
                 loginPage.waitForLoginButton();
-                loginPage.withUsername(Constant.ACCOUNT_LOGIN[0].email).withPassword(Constant.ACCOUNT_LOGIN[0].password).login();
-
+                loginPage.withUsername("stg.tien.hoang@asiantech.vn").withPassword("Abc123@@").login();
                 homePage.waitForWelcomeMessage();
                 Assert.assertTrue(homePage.welcomeTestIsDisplayed());
             }

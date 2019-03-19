@@ -108,7 +108,6 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <projectName>AT-Portal</projectName>
                                     <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
                                     <jsonFiles>**/*.json</jsonFiles>
                                     <classificationFiles>**/browser.properties</classificationFiles>
