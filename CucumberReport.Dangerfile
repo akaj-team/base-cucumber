@@ -5,7 +5,7 @@ reportJsonFile = "App/target/GitHubReport.json"
 if(File.file?(reportJsonFile))
       file = File.read(reportJsonFile)
       data = JSON.parse(file)
-      if(#{data['features']['failedFeature']} != '0')
+      if(data['features']['failedFeature'] != 0)
             messages = "||Passed|Failed|Skipped|Pending|Undefined|Total|\n"
             messages << "|:---:|:---:|:---:|:---:|:---:|:---:|:---:|\n"
             messages << "|Features|#{data['features']['passedFeature']}|#{data['features']['failedFeature']}|0|0|0|#{data['features']['totalFeatures']}|\n"
