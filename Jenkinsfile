@@ -121,7 +121,7 @@ pipeline {
 import net.masterthought.jenkins.CucumberReportPublisher.Classification
 
 HashMap<String, String> getClassificationsFromFile() {
-    HashMap<String, String> classifications = new HashMap<>()
+    HashMap<String, String> classifications = Collections.emptyMap()
     classifications.add(new Classification("aaaa", "aaaa"))
     classifications.add(new Classification("bbbb", "bbbb"))
     classifications.add(new Classification("cccc", "cccc"))
