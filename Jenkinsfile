@@ -72,21 +72,6 @@ pipeline {
                             steps {
                                 sh "mvn install -DskipTests"
                                 sh "mvn validate"
-                                step([
-                                        $class         : 'CucumberReportPublisher',
-                                        classifications: getClassificationsFromFile(),
-                                        failedFeaturesNumber: 0,
-                                        failedScenariosNumber: 0,
-                                        failedStepsNumber: 0,
-                                        fileExcludePattern: '',
-                                        fileIncludePattern: '**/*.json',
-                                        jsonReportDirectory: 'testrun/reports',
-                                        parallelTesting: true,
-                                        pendingStepsNumber: 0,
-                                        skippedStepsNumber: 0,
-                                        trendsLimit: 0,
-                                        undefinedStepsNumber: 0
-                                ])
                             }
                             post {
                                 success {
