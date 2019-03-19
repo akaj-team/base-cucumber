@@ -70,7 +70,7 @@ pipeline {
                             steps {
                                 sh "mvn install -DskipTestse"
                                 sh "mvn validate"
-                                [
+                               step( [
                                         $class               : 'CucumberReportPublisher',
                                         classifications      : runClassifications,
                                         failedFeaturesNumber : 0,
@@ -84,7 +84,7 @@ pipeline {
                                         skippedStepsNumber   : 0,
                                         trendsLimit          : 0,
                                         undefinedStepsNumber : 0
-                                ]
+                                ])
                             }
                             post {
                                 success {
