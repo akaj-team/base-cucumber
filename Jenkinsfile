@@ -99,7 +99,7 @@ pipeline {
                         }
 
                         stage("Publish Reports") {
-                            step([
+                            steps([
                                     $class               : 'CucumberReportPublisher',
                                     classifications      : getClassificationsFromFile(),
                                     failedFeaturesNumber : 0,
