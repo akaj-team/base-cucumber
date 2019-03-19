@@ -1,4 +1,3 @@
-
 def APP_MODULE = "App"
 pipeline {
     agent any
@@ -71,6 +70,21 @@ pipeline {
                             steps {
                                 sh "mvn install -DskipTestse"
                                 sh "mvn validate"
+                                [
+                                        $class               : 'CucumberReportPublisher',
+                                        classifications      : runClassifications,
+                                        failedFeaturesNumber : 0,
+                                        failedScenariosNumber: 0,
+                                        failedStepsNumber    : 0,
+                                        fileExcludePattern   : '',
+                                        fileIncludePattern   : '**/*.json',
+                                        jsonReportDirectory  : '**/cucumber-reports',
+                                        parallelTesting      : true,
+                                        pendingStepsNumber   : 0,
+                                        skippedStepsNumber   : 0,
+                                        trendsLimit          : 0,
+                                        undefinedStepsNumber : 0
+                                ]
                             }
                             post {
                                 success {
@@ -103,4 +117,13 @@ pipeline {
             }
         }
     }
+}
+import net.masterthought.jenkins.CucumberReportPublisher.Classification
+
+HashMap<String, String> getClassificationsFromFile() {
+    HashMap<String, String> classifications = new HashMap<>()
+    classifications.add(new Classification("aaaa", "aaaa"))
+    classifications.add(new Classification("bbbb", "bbbb"))
+    classifications.add(new Classification("cccc", "cccc"))
+    return classifications
 }
