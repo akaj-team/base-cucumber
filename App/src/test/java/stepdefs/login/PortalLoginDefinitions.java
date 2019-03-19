@@ -51,12 +51,12 @@ public class PortalLoginDefinitions extends BaseDefinitions implements En {
 
         When("^I click on login button$", () -> loginPage.login());
 
-        Then("^I should see the welcome message$", () -> {
-            homePage = initPage(getDriver(), HomePage.class);
-            homePage.waitForWelcomeMessage();
-            Assert.assertTrue(homePage.hasWelcomeMessage());
-            Assert.assertTrue(homePage.welcomeTestIsDisplayed());
-        });
+//        Then("^I should see the welcome message$", () -> {
+//            homePage = initPage(getDriver(), HomePage.class);
+//            homePage.waitForWelcomeMessage();
+//            Assert.assertTrue(homePage.hasWelcomeMessage());
+//            Assert.assertTrue(homePage.welcomeTestIsDisplayed());
+//        });
 
         Then("^Login button will be disabled$", () -> Assert.assertFalse(loginPage.getLoginButton().isEnabled()));
 
