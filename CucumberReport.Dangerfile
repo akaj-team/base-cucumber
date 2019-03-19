@@ -13,5 +13,5 @@ if(File.file?(reportJsonFile))
       messages << "|Duration|#{data['durations']['passedDuration']}|#{data['durations']['failedDuration']}|#{data['durations']['skippedDuration']}|#{data['durations']['pendingDuration']}|#{data['durations']['undefinedDuration']}|#{data['durations']['totalDuration']}|\n"
     markdown messages if data['features']['totalFeatures'] > 0
 else
-    warn("Can not find json report file: #{reportJsonFile}")
+    fail("Can not find json report file: #{reportJsonFile}")
 end
