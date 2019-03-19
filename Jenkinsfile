@@ -20,7 +20,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json,${APP_MODULE}/target/browser.properties"
+                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
@@ -72,19 +72,16 @@ pipeline {
                             steps {
                                 sh "mvn install -DskipTests"
                                 sh "mvn validate"
+                                step([
+                                        $class         : 'CucumberReportPublisher',
+                                        classifications: getClassificationsFromFile()
+                                ])
                             }
                             post {
                                 success {
                                     stash includes: "${APP_MODULE}/target/checkstyle.xml", name: 'checkstyle'
                                 }
                             }
-                            echo "***** Publish Reports *****"
-                            def runClassifications = getClassificationsFromFile()
-                            println "runClassifications - " + runClassifications.toString()
-                            step([
-                                    $class         : 'CucumberReportPublisher',
-                                    classifications: runClassifications
-                            ])
                         }
                         stage('Reporting') {
                             agent {
