@@ -1,5 +1,8 @@
 package stepdefs.login;
 
+import pages.home.HomePage;
+import pages.login.LoginPage;
+import utils.Constant;
 import at.base.BaseDefinitions;
 import cucumber.api.java8.En;
 import org.openqa.selenium.By;
@@ -7,9 +10,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import pages.home.HomePage;
-import pages.login.LoginPage;
-import utils.Constant;
 
 public class PortalLoginDefinitions extends BaseDefinitions implements En {
     private LoginPage loginPage;
