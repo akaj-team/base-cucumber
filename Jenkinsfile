@@ -52,7 +52,6 @@ pipeline {
                                 unstash('source-code')
                                 unstash('cucumber-report')
                                 sh "bundle install --path /vendor/bundle"
-                                sh "env"
                             }
                             post {
                                 success {
