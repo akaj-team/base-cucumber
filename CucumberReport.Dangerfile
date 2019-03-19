@@ -15,6 +15,7 @@ if(File.file?(reportJsonFile))
            markdown messages if data['features']['totalFeatures'] > 0
       else
           fail("Having some features failed.")
+      end
 else
     warn("Can not find json report file: #{reportJsonFile}")
 end
