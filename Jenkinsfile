@@ -72,7 +72,7 @@ pipeline {
                                 sh "mvn validate"
                                step( [
                                         $class               : 'CucumberReportPublisher',
-                                        classifications      : runClassifications,
+                                        classifications      : getClassificationsFromFile(),
                                         failedFeaturesNumber : 0,
                                         failedScenariosNumber: 0,
                                         failedStepsNumber    : 0,
