@@ -33,7 +33,9 @@ pipeline {
                             }
                         }
                         stage('Export reports') {
-
+                            environment {
+                                REPORT_IGNORE_FAIL = 'Environment'
+                            }
                             when {
                                 not {
                                     environment name: 'CHANGE_ID', value: ''
@@ -50,13 +52,10 @@ pipeline {
                                 unstash('source-code')
                                 unstash('cucumber-report')
                                 sh "bundle install --path /vendor/bundle"
-                                script {
-                                    env.REPORT_IGNORE_FAIL = true
-                                }
                             }
                             post {
                                 success {
-                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile && [ ! -z ${env.REPORT_IGNORE_FAIL} ]"
+                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
                                 }
                             }
                         }
