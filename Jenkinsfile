@@ -34,6 +34,19 @@ pipeline {
                                 }
                             }
                         }
+
+                        stage('Generate HTML report') {
+                            cucumber buildStatus: 'UNSTABLE',
+                                    fileIncludePattern: '**/*.json',
+                                    trendsLimit: 10,
+                                    classifications: [
+                                            [
+                                                    'key': 'Browser',
+                                                    'value': 'Firefox'
+                                            ]
+                                    ]
+                        }
+
                         stage('Export reports') {
                             when {
                                 not {
@@ -92,15 +105,6 @@ pipeline {
                                 unstash('checkstyle')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
-                                cucumber buildStatus: 'UNSTABLE',
-                                        fileIncludePattern: '**/*.json',
-                                        trendsLimit: 10,
-                                        classifications: [
-                                                [
-                                                        'key'  : 'Browser',
-                                                        'value': 'Chrome'
-                                                ]
-                                        ]
                             }
                             post {
                                 success {
