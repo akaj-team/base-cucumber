@@ -1,5 +1,6 @@
 def APP_MODULE = "App"
 import net.masterthought.jenkins.CucumberReportPublisher.Classification
+
 pipeline {
     agent any
 
@@ -71,7 +72,6 @@ pipeline {
                             steps {
                                 sh "mvn install -DskipTestse"
                                 sh "mvn validate"
-                                cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
                             }
                             post {
                                 success {
@@ -92,6 +92,15 @@ pipeline {
                                 unstash('checkstyle')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
+                                cucumber buildStatus: 'UNSTABLE',
+                                        fileIncludePattern: '**/*.json',
+                                        trendsLimit: 10,
+                                        classifications: [
+                                                [
+                                                        'key'  : 'Browser',
+                                                        'value': 'Chrome'
+                                                ]
+                                        ]
                             }
                             post {
                                 success {
