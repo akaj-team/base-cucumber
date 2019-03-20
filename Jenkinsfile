@@ -36,15 +36,19 @@ pipeline {
                         }
 
                         stage('Generate HTML report') {
-                            cucumber buildStatus: 'UNSTABLE',
-                                    fileIncludePattern: '**/*.json',
-                                    trendsLimit: 10,
-                                    classifications: [
-                                            [
-                                                    'key': 'Browser',
-                                                    'value': 'Firefox'
+                            post {
+                                always {
+                                    cucumber buildStatus: 'UNSTABLE',
+                                            fileIncludePattern: '**/*.json',
+                                            trendsLimit: 10,
+                                            classifications: [
+                                                    [
+                                                            'key'  : 'Browser',
+                                                            'value': 'Firefox'
+                                                    ]
                                             ]
-                                    ]
+                                }
+                            }
                         }
 
                         stage('Export reports') {
