@@ -91,13 +91,13 @@ pipeline {
                                 unstash('checkstyle')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
+                                cucumber classifications: getClassificationsFromFile()
                             }
                             post {
                                 success {
                                     sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
                                 }
                             }
-                            cucumber classifications: getClassificationsFromFile()
                         }
                     }
                 }
