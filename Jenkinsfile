@@ -97,24 +97,7 @@ pipeline {
                                     sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
                                 }
                             }
-                        }
-
-                        stage("Publish Reports") {
-                            steps("aaa"){[
-                                    $class               : 'CucumberReportPublisher',
-                                    classifications      : getClassificationsFromFile(),
-                                    failedFeaturesNumber : 0,
-                                    failedScenariosNumber: 0,
-                                    failedStepsNumber    : 0,
-                                    fileExcludePattern   : '',
-                                    fileIncludePattern   : '**/*.json',
-                                    jsonReportDirectory  : '**/cucumber-reports',
-                                    parallelTesting      : true,
-                                    pendingStepsNumber   : 0,
-                                    skippedStepsNumber   : 0,
-                                    trendsLimit          : 0,
-                                    undefinedStepsNumber : 0
-                            ]}
+                            cucumber classifications: getClassificationsFromFile()
                         }
                     }
                 }
