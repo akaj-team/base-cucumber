@@ -91,7 +91,7 @@ pipeline {
                                 unstash('checkstyle')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
-                                cucumber classifications: getClassificationsFromFile()
+                                cucumber classifications: getClassificationsFromFile(),fileIncludePattern: '**/*.json'
                             }
                             post {
                                 success {
