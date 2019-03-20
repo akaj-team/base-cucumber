@@ -71,6 +71,7 @@ pipeline {
                             steps {
                                 sh "mvn install -DskipTestse"
                                 sh "mvn validate"
+                                cucumber failedFeaturesNumber: -1, failedScenariosNumber: -1, failedStepsNumber: -1, fileIncludePattern: '**/*.json', pendingStepsNumber: -1, skippedStepsNumber: -1, sortingMethod: 'ALPHABETICAL', undefinedStepsNumber: -1
                             }
                             post {
                                 success {
@@ -91,7 +92,6 @@ pipeline {
                                 unstash('checkstyle')
                                 sh "gem -v"
                                 sh "bundle install --path /vendor/bundle"
-                                cucumber classifications: getClassificationsFromFile(),fileIncludePattern: '**/*.json'
                             }
                             post {
                                 success {
