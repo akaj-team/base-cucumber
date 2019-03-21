@@ -10,8 +10,8 @@ Feature: Check Login AT Portal
 
   @Only
   Scenario: Login success with correct account
-    When I enter my username
-    And I fill in password
+    When I enter my username with "stg.tien.hoang@asiantech.vn"
+    And I fill in password with "Abc123@@"
     And I click on login button
     Then I should see the welcome message
 
