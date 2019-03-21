@@ -23,22 +23,23 @@ pipeline {
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     script {
                                         props = readProperties interpolate: true, file: '**/browser.properties'
+                                        cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
+                                                sortingMethod: 'ALPHABETICAL',
+                                                classifications: [
+                                                        ['key'  : 'Platform',
+                                                         'value': props.Platform
+                                                        ],
+                                                        ['key'  : 'BrowserName',
+                                                         'value': props.BrowserName
+                                                        ],
+                                                        ['key'  : 'BrowserVersion',
+                                                         'value': props.BrowserVersion
+                                                        ],
+                                                        ['key'  : 'Server',
+                                                         'value': props.Server
+                                                        ]
+                                                ]
                                     }
-                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
-                                            sortingMethod: 'ALPHABETICAL',
-                                            classifications: [
-                                                    ['key'  : 'Platform',
-                                                     'value': $ { props['Platform'] }
-                                                    ],
-                                                    ['key'  : 'BrowserName',
-                                                     'value': $ { props['BrowserName'] }
-                                                    ],
-                                                    ['key'  : 'BrowserVersion',
-                                                     'value': $ { props['BrowserVersion'] }
-                                                    ],
-                                                    ['key'  : 'Server',
-                                                     'value': $ { props['Server'] }]
-                                            ]
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                                 }
 
