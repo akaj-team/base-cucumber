@@ -18,7 +18,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/"
+                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     script {
                                         def props = readProperties interpolate: true, file: 'App/target/browser.properties'
@@ -39,6 +39,7 @@ pipeline {
                                                         ]
                                                 ]
                                     }
+
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                                 }
 
@@ -50,7 +51,6 @@ pipeline {
                                 }
                             }
                         }
-
                         stage('Export reports') {
                             when {
                                 not {
