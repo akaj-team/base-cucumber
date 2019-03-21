@@ -36,12 +36,6 @@ pipeline {
                             }
                         }
 
-                        stage {
-                            steps {
-
-                            }
-                        }
-
                         stage('Export reports') {
                             when {
                                 not {
