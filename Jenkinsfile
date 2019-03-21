@@ -23,8 +23,8 @@ pipeline {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/browser.properties"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                                    cucumber sortingMethod: 'ALPHABETICAL',
-                                            fileIncludePattern: '${APP_MODULE}/target/cucumber-reports/*.json',
+                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
+                                            sortingMethod: 'ALPHABETICAL',
                                             classifications: [
                                                     [
                                                             'key'  : 'Browser',
@@ -40,6 +40,12 @@ pipeline {
                                 failure {
                                     echo "Test failed"
                                 }
+                            }
+                        }
+
+                        stage {
+                            steps {
+
                             }
                         }
 
