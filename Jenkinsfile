@@ -1,6 +1,6 @@
 def APP_MODULE = "App"
-def d = [test: 'Default', something: 'Default', other: 'Default']
-def props = readProperties defaults: d, file: 'dir/browser.properties', text: 'other=Override'
+//def d = [test: 'Default', something: 'Default', other: 'Default']
+def props = readProperties file: '**/browser.properties'
 pipeline {
     agent any
 
