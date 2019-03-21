@@ -18,7 +18,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
+                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     script {
                                         def props = readProperties interpolate: true, file: 'App/target/browser.properties'
