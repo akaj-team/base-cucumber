@@ -1,4 +1,5 @@
 def APP_MODULE = "App"
+def props = readProperties file: '**/browser.properties'
 import net.masterthought.jenkins.CucumberReportPublisher.Classification
 
 pipeline {
@@ -17,21 +18,19 @@ pipeline {
                         stage('Run cucumber') {
                             steps {
                                 sh 'run-test.sh chrome 3'
-                                cucumber buildStatus: 'UNSTABLE',
-                                        fileIncludePattern: '**/*CucumberTestReport*.json',
-                                        trendsLimit: 10,
-                                        classifications: [
-                                                [
-                                                        'key'  : 'Browser',
-                                                        'value': 'Chrome'
-                                                ]
-                                        ]
                             }
                             post {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/browser.properties"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
+                                    cucumber sortingMethod: 'ALPHABETICAL',
+                                            fileIncludePattern: '${APP_MODULE}/target/cucumber-reports/*.json',
+                                            classifications: [
+                                                    [
+                                                            'key'  : 'Browser',
+                                                            'value': 'Chrome'
+                                                    ]
+                                            ]
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                                 }
 
