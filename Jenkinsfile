@@ -2,7 +2,6 @@ def APP_MODULE = "App"
 //def d = [test: 'Default', something: 'Default', other: 'Default']
 pipeline {
     agent any
-    def props = readProperties file: '**/browser.properties'
     stages {
         stage('Stash source code') {
             steps {
@@ -21,6 +20,7 @@ pipeline {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/browser.properties"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
+                                    def props = readProperties file: '**/browser.properties'
                                     cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
                                             sortingMethod: 'ALPHABETICAL',
                                             classifications: [
