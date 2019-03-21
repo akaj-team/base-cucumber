@@ -1,4 +1,5 @@
 def APP_MODULE = "App"
+def props
 pipeline {
     agent any
 
@@ -15,7 +16,9 @@ pipeline {
                         stage('Run cucumber') {
                             steps {
                                 sh 'run-test.sh chrome 3'
-                                def props = readProperties interpolate: true, file: '**/browser.properties'
+                                script {
+                                    props = readProperties interpolate: true, file: '**/browser.properties'
+                                }
                             }
                             post {
                                 always {
