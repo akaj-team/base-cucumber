@@ -1,4 +1,3 @@
-
 def APP_MODULE = "App"
 pipeline {
     agent any
@@ -21,7 +20,25 @@ pipeline {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
+                                    script {
+                                        def props = readProperties interpolate: true, file: "${APP_MODULE}/target/cucumber-reports/browser.properties"
+                                        cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
+                                                sortingMethod: 'ALPHABETICAL',
+                                                classifications: [
+                                                        ['key'  : 'Platform',
+                                                         'value': props.Platform
+                                                        ],
+                                                        ['key'  : 'BrowserName',
+                                                         'value': props.BrowserName
+                                                        ],
+                                                        ['key'  : 'BrowserVersion',
+                                                         'value': props.BrowserVersion
+                                                        ],
+                                                        ['key'  : 'Server',
+                                                         'value': props.Server
+                                                        ]
+                                                ]
+                                    }
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                                 }
 
