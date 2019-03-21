@@ -1,5 +1,4 @@
 def APP_MODULE = "App"
-def props = readProperties file: '**/browser.properties'
 import net.masterthought.jenkins.CucumberReportPublisher.Classification
 
 pipeline {
