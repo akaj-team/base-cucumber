@@ -16,14 +16,14 @@ pipeline {
                         stage('Run cucumber') {
                             steps {
                                 sh 'run-test.sh chrome 3'
-                                script {
-                                    props = readProperties interpolate: true, file: '**/browser.properties'
-                                }
                             }
                             post {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
+                                    script {
+                                        props = readProperties interpolate: true, file: '**/browser.properties'
+                                    }
                                     cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
                                             sortingMethod: 'ALPHABETICAL',
                                             classifications: [
