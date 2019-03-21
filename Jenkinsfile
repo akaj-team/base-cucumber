@@ -15,8 +15,7 @@ pipeline {
                         stage('Run cucumber') {
                             steps {
                                 sh 'run-test.sh chrome 3'
-                                def d = [test: 'Default', something: 'Default', other: 'Default']
-                                def props = readProperties defaults: d, file: '**/browser.properties', text: 'other=Override'
+                                def props = readProperties interpolate: true, file: '**/browser.properties'
                             }
                             post {
                                 always {
