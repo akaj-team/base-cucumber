@@ -1,5 +1,4 @@
 def APP_MODULE = "App"
-def props
 pipeline {
     agent any
 
@@ -22,12 +21,12 @@ pipeline {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     script {
-                                        props = readProperties interpolate: true, file: '**/browser.properties'
+                                        def props = readProperties interpolate: true, file: "${APP_MODULE}/target/browser.properties"
                                         cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
                                                 sortingMethod: 'ALPHABETICAL',
                                                 classifications: [
                                                         ['key'  : 'Platform',
-                                                         'value': props.Platform
+                                                         'value': props.latform
                                                         ],
                                                         ['key'  : 'BrowserName',
                                                          'value': props.BrowserName
