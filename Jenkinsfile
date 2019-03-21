@@ -1,9 +1,8 @@
 def APP_MODULE = "App"
 //def d = [test: 'Default', something: 'Default', other: 'Default']
-def props = readProperties file: '**/browser.properties'
 pipeline {
     agent any
-
+    def props = readProperties file: '**/browser.properties'
     stages {
         stage('Stash source code') {
             steps {
