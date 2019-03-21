@@ -26,7 +26,7 @@ pipeline {
                                                 sortingMethod: 'ALPHABETICAL',
                                                 classifications: [
                                                         ['key'  : 'Platform',
-                                                         'value': props.latform
+                                                         'value': props.Platform
                                                         ],
                                                         ['key'  : 'BrowserName',
                                                          'value': props.BrowserName
