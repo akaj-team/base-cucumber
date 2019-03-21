@@ -20,7 +20,6 @@ pipeline {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json,${APP_MODULE}/target/browser.properties"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                                    stash includes: "${APP_MODULE}/target/browser.properties", name: 'cucumber-properties'
                                     script {
                                         def props = readProperties interpolate: true, file: "${APP_MODULE}/target/browser.properties"
                                         cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
@@ -41,6 +40,7 @@ pipeline {
                                                 ]
                                     }
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
+                                   // stash includes: "${APP_MODULE}/target/browser.properties", name: 'cucumber-properties'
                                 }
 
                                 success {
@@ -67,7 +67,7 @@ pipeline {
                             steps("Install gems") {
                                 unstash('source-code')
                                 unstash('cucumber-report')
-                                unstash('cucumber-properties')
+                             //   unstash('cucumber-properties')
                                 sh "bundle install --path /vendor/bundle"
                             }
                             post {
@@ -88,7 +88,7 @@ pipeline {
                     stages {
                         stage('Validate') {
                             steps {
-                                sh "mvn install -DskipTestse"
+                                sh "mvn install -DskipTests"
                                 sh "mvn validate"
                             }
                             post {
