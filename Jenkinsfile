@@ -1,6 +1,5 @@
 def APP_MODULE = "App"
-import net.masterthought.jenkins.CucumberReportPublisher.Classification
-
+def props = readProperties file: '**/browser.properties'
 pipeline {
     agent any
 
@@ -22,7 +21,21 @@ pipeline {
                                 always {
                                     archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/browser.properties"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL', classifications: [['key': 'Browser', 'value': 'Chrome']]
+                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
+                                            sortingMethod: 'ALPHABETICAL',
+                                            classifications: [
+                                                    ['key'  : 'Platform',
+                                                     'value': $ { props['Platform'] }
+                                                    ],
+                                                    ['key'  : 'BrowserName',
+                                                     'value': $ { props['BrowserName'] }
+                                                    ],
+                                                    ['key'  : 'BrowserVersion',
+                                                     'value': $ { props['BrowserVersion'] }
+                                                    ],
+                                                    ['key'  : 'Server',
+                                                     'value': $ { props['Server'] }]
+                                            ]
                                     stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                                 }
 
@@ -105,12 +118,4 @@ pipeline {
             }
         }
     }
-}
-
-ArrayList<Classification> getClassificationsFromFile() {
-    ArrayList<Classification> classifications = Collections.emptyList()
-    classifications.add(new Classification("aaaa", "aaaa"))
-    classifications.add(new Classification("bbbb", "bbbb"))
-    classifications.add(new Classification("cccc", "cccc"))
-    return classifications
 }
