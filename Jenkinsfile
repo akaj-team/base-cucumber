@@ -1,6 +1,4 @@
 def APP_MODULE = "App"
-def d = [test: 'Default', something: 'Default', other: 'Default']
-def props = readProperties defaults: d, file: '**/browser.properties', text: 'other=Override'
 pipeline {
     agent any
 
@@ -17,6 +15,8 @@ pipeline {
                         stage('Run cucumber') {
                             steps {
                                 sh 'run-test.sh chrome 3'
+                                def d = [test: 'Default', something: 'Default', other: 'Default']
+                                def props = readProperties defaults: d, file: '**/browser.properties', text: 'other=Override'
                             }
                             post {
                                 always {
