@@ -22,7 +22,7 @@ pipeline {
                             }
                             post {
                                 always {
-                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/browser.properties"
+                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                                     junit "${APP_MODULE}/target/cucumber-reports/*.xml"
                                     cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
                                             sortingMethod: 'ALPHABETICAL',
