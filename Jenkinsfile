@@ -1,106 +1,100 @@
-
-def APP_MODULE = "App"
 pipeline {
+    /* Step Build */
     agent any
 
+    environment {
+                HOME = '/.gradle'
+                GRADLE_CACHE = '/.gradle_cache'
+            }
+
     stages {
-        stage('Stash source code') {
+        /* Step build images Check */
+        stage('Build Check Image') {
             steps {
-                stash includes: '**', name: 'source-code', useDefaultExcludes: false
+                sh 'env'
+                sh 'rm -f env.list'
+                sh 'env | grep "GIT\\|NODE_\\|STAGE\\|BUILD\\|JOB_NAME\\|ghprbPullId\\|CHANGE_ID" > env.list'
+                sh 'cat env.list'
+                sh 'make check'
             }
         }
-        stage('Run Tests') {
-            parallel {
-                stage("Build") {
-                    stages {
-                        stage('Run cucumber') {
-                            steps {
-                                sh 'run-test.sh chrome 3'
-                            }
-                            post {
-                                always {
-                                    archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
-                                    junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                                    cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
-                                    stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
-                                }
 
-                                success {
-                                    echo "Test succeeded"
-                                }
-                                failure {
-                                    echo "Test failed"
-                                }
-                            }
-                        }
-                        stage('Export reports') {
-                            when {
-                                not {
-                                    environment name: 'CHANGE_ID', value: ''
-                                }
-                            }
-                            agent {
-                                docker {
-                                    image 'at/reporting:latest'
-                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
-                                }
-                            }
-                            options { skipDefaultCheckout() }
-                            steps("Install gems") {
-                                unstash('source-code')
-                                unstash('cucumber-report')
-                                sh "bundle install --path /vendor/bundle"
-                            }
-                            post {
-                                success {
-                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
-                                }
-                            }
-                        }
-                    }
-                }
-
-                stage('Validate code') {
-                    when {
-                        not {
-                            environment name: 'CHANGE_ID', value: ''
-                        }
-                    }
-                    stages {
-                        stage('Validate') {
-                            steps {
-                                sh "mvn install -DskipTestse"
-                                sh "mvn validate"
-                            }
-                            post {
-                                success {
-                                    stash includes: "${APP_MODULE}/target/checkstyle.xml", name: 'checkstyle'
-                                }
-                            }
-                        }
-                        stage('Reporting') {
-                            agent {
-                                docker {
-                                    image 'at/reporting:latest'
-                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
-                                }
-                            }
-                            options { skipDefaultCheckout() }
-                            steps("Preparing source code & Installing gems") {
-                                unstash('source-code')
-                                unstash('checkstyle')
-                                sh "gem -v"
-                                sh "bundle install --path /vendor/bundle"
-                            }
-                            post {
-                                success {
-                                    sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
-                                }
-                            }
-                        }
-                    }
+        /* Step Check */
+        stage('Check') {
+            agent {
+                docker {
+                    image 'fr/android-check'
+                    // Mount the Gradle cache in the container
+                    args  '-v /Users/huong.nguyen/.gradle:/.gradle:rw'
                 }
             }
+    
+            steps {
+                // Copy the Gradle cache from the host, so we can write to it
+                // sh "rsync -a --include /caches --include /wrapper --exclude '/*' ${GRADLE_CACHE}/ ${HOME} || true"
+                // sh './gradlew clean :app:check'
+                sh "./gradlew detekt"
+            }
+
+            post {
+                success {
+                    sh "bundle exec danger"
+                    // Write updates to the Gradle cache back to the host
+                    // sh "rsync -au ${HOME}/caches ${HOME}/wrapper ${GRADLE_CACHE}/ || true"
+                }
+            }
+        }
+
+        /* Step build images report */
+        stage('Build Report Image') {
+            steps {
+                sh 'make report'
+            }
+            // post {
+            //     success {
+            //         sh "./gradlew detekt"
+            //     }
+            // }
+        }
+        
+        // /* Step Reporting */
+        // stage('Reporting') {
+        //     agent {
+        //         docker {
+        //             image 'at/reporting:latest'
+        //             args '-v $HOME/vendor/bundle:/vendor/bundle'
+        //         }
+        //     }
+        //     // options { skipDefaultCheckout() }
+        //     steps("Preparing source code & Installing gems") {
+        //         sh "gem -v"
+        //         sh "bundle install --path /vendor/bundle"
+        //     }
+        //     post {
+        //         success {
+        //             sh "bundle exec danger"
+        //         }
+        //     }
+        // }
+    }
+    
+    post {
+        /* Step Build */
+        always {
+            echo 'Report check to jenkins!!!'
+            deleteDir()
+        }
+        success {
+            echo 'I succeeeded!'
+        }
+        unstable {
+            echo 'I am unstable :/'
+        }
+        failure {
+            echo 'I failed :('
+        }
+        changed {
+            echo 'Things were different before...'
         }
     }
 }
