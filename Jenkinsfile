@@ -11,8 +11,13 @@ properties([
                 throttleOption               : 'category'
         ],
 ])
+throttle(['cucumber_test']) {
+    node('swarm') {
+        sleep 30
+    }
+}
 pipeline {
-    agent any
+    agent { label 'swarm' }
 
     stages {
         stage('Stash source code') {
@@ -62,30 +67,28 @@ pipeline {
                                 }
                             }
                         }
-                        throttle(['cucumber_test']) {
 
-                            stage('Export reports') {
-                                when {
-                                    not {
-                                        environment name: 'CHANGE_ID', value: ''
-                                    }
+                        stage('Export reports') {
+                            when {
+                                not {
+                                    environment name: 'CHANGE_ID', value: ''
                                 }
-                                agent {
-                                    docker {
-                                        image 'at/reporting:latest'
-                                        args '-v $HOME/vendor/bundle:/vendor/bundle'
-                                    }
+                            }
+                            agent {
+                                docker {
+                                    image 'at/reporting:latest'
+                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
                                 }
-                                options { skipDefaultCheckout() }
-                                steps("Install gems") {
-                                    unstash('source-code')
-                                    unstash('cucumber-report')
-                                    sh "bundle install --path /vendor/bundle"
-                                }
-                                post {
-                                    success {
-                                        sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
-                                    }
+                            }
+                            options { skipDefaultCheckout() }
+                            steps("Install gems") {
+                                unstash('source-code')
+                                unstash('cucumber-report')
+                                sh "bundle install --path /vendor/bundle"
+                            }
+                            post {
+                                success {
+                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
                                 }
                             }
                         }
@@ -110,26 +113,24 @@ pipeline {
                                 }
                             }
                         }
-                        throttle(['cucumber_test']) {
 
-                            stage('Reporting') {
-                                agent {
-                                    docker {
-                                        image 'at/reporting:latest'
-                                        args '-v $HOME/vendor/bundle:/vendor/bundle'
-                                    }
+                        stage('Reporting') {
+                            agent {
+                                docker {
+                                    image 'at/reporting:latest'
+                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
                                 }
-                                options { skipDefaultCheckout() }
-                                steps("Preparing source code & Installing gems") {
-                                    unstash('source-code')
-                                    unstash('checkstyle')
-                                    sh "gem -v"
-                                    sh "bundle install --path /vendor/bundle"
-                                }
-                                post {
-                                    success {
-                                        sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
-                                    }
+                            }
+                            options { skipDefaultCheckout() }
+                            steps("Preparing source code & Installing gems") {
+                                unstash('source-code')
+                                unstash('checkstyle')
+                                sh "gem -v"
+                                sh "bundle install --path /vendor/bundle"
+                            }
+                            post {
+                                success {
+                                    sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
                                 }
                             }
                         }
