@@ -1,4 +1,16 @@
 def APP_MODULE = "App"
+properties([
+        [
+                $class                       : 'ThrottleJobProperty',
+                categories                   : ['cucumber_test'],
+                limitOneJobWithMatchingParams: false,
+                maxConcurrentPerNode         : 1,
+                maxConcurrentTotal           : 1,
+                paramsToUseForLimit          : '',
+                throttleEnabled              : true,
+                throttleOption               : 'category'
+        ],
+])
 pipeline {
     agent any
 
