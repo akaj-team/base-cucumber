@@ -30,30 +30,41 @@ pipeline {
                         }
                     }
                 }
-                stage('Export reports') {
-                    when {
-                        not {
-                            environment name: 'CHANGE_ID', value: ''
-                        }
-                    }
-                    agent {
-                        docker {
-                            image 'at/reporting:latest'
-                            args '-v $HOME/vendor/bundle:/vendor/bundle'
-                        }
-                    }
-                    options { skipDefaultCheckout() }
-                    steps("Install gems") {
-                        unstash('source-code')
-                        unstash('cucumber-report')
-                        sh "bundle install --path /vendor/bundle"
-                    }
-                    post {
-                        success {
-                            sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
-                        }
+                stage('Test Export reports 1') {
+                    steps {
+                        echo 'Export reports 1'
                     }
                 }
+
+                stage('Test Export reports 2') {
+                    steps {
+                        echo 'Export reports 2'
+                    }
+                }
+//                stage('Export reports') {
+//                    when {
+//                        not {
+//                            environment name: 'CHANGE_ID', value: ''
+//                        }
+//                    }
+//                    agent {
+//                        docker {
+//                            image 'at/reporting:latest'
+//                            args '-v $HOME/vendor/bundle:/vendor/bundle'
+//                        }
+//                    }
+//                    options { skipDefaultCheckout() }
+//                    steps("Install gems") {
+//                        unstash('source-code')
+//                        unstash('cucumber-report')
+//                        sh "bundle install --path /vendor/bundle"
+//                    }
+//                    post {
+//                        success {
+//                            sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
+//                        }
+//                    }
+//                }
             }
         }
 
@@ -75,28 +86,33 @@ pipeline {
                         }
                     }
                 }
-                stage('Reporting') {
-                    agent {
-                        docker {
-                            image 'at/reporting:latest'
-                            args '-v $HOME/vendor/bundle:/vendor/bundle'
-                        }
-                    }
-                    options { skipDefaultCheckout() }
-                    steps("Preparing source code & Installing gems") {
-                        throttle(['cucumber_test']) {
-                            node("throttle") {
-                                unstash('source-code')
-                                unstash('checkstyle')
-                                sh "gem -v"
-                                sh "bundle install --path /vendor/bundle"
-                            }
-                        }
-                    }
-                    post {
-                        success {
-                            sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
-                        }
+//                stage('Reporting') {
+//                    agent {
+//                        docker {
+//                            image 'at/reporting:latest'
+//                            args '-v $HOME/vendor/bundle:/vendor/bundle'
+//                        }
+//                    }
+//                    options { skipDefaultCheckout() }
+//                    steps("Preparing source code & Installing gems") {
+//                        throttle(['cucumber_test']) {
+//                            node("throttle") {
+//                                unstash('source-code')
+//                                unstash('checkstyle')
+//                                sh "gem -v"
+//                                sh "bundle install --path /vendor/bundle"
+//                            }
+//                        }
+//                    }
+//                    post {
+//                        success {
+//                            sh "bundle exec danger --danger_id=check_style --dangerfile=Dangerfile"
+//                        }
+//                    }
+//                }
+                stage('Test Reporting 1') {
+                    steps {
+                        echo 'Reporting 2'
                     }
                 }
             }
