@@ -1,23 +1,6 @@
 def APP_MODULE = "App"
-//properties([
-//        [
-//                $class                       : 'ThrottleJobProperty',
-//                categories                   : ['cucumber_test'],
-//                limitOneJobWithMatchingParams: false,
-//                maxConcurrentPerNode         : 1,
-//                maxConcurrentTotal           : 2,
-//                paramsToUseForLimit          : '',
-//                throttleEnabled              : true,
-//                throttleOption               : 'category'
-//        ],
-//])
-//throttle(['cucumber_test']) {
-//    node('swarm') {
-//        sleep 30
-//    }
-//}
 pipelineJob {
-    agent { label 'swarm' }
+    agent any
 
     stages {
         stage('Stash source code') {
@@ -68,30 +51,30 @@ pipelineJob {
                             }
                         }
 
-                        stage('Export reports') {
-                            when {
-                                not {
-                                    environment name: 'CHANGE_ID', value: ''
-                                }
-                            }
-                            agent {
-                                docker {
-                                    image 'at/reporting:latest'
-                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
-                                }
-                            }
-                            options { skipDefaultCheckout() }
-                            steps("Install gems") {
-                                unstash('source-code')
-                                unstash('cucumber-report')
-                                sh "bundle install --path /vendor/bundle"
-                            }
-                            post {
-                                success {
-                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
-                                }
-                            }
-                        }
+//                        stage('Export reports') {
+//                            when {
+//                                not {
+//                                    environment name: 'CHANGE_ID', value: ''
+//                                }
+//                            }
+//                            agent {
+//                                docker {
+//                                    image 'at/reporting:latest'
+//                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
+//                                }
+//                            }
+//                            options { skipDefaultCheckout() }
+//                            steps("Install gems") {
+//                                unstash('source-code')
+//                                unstash('cucumber-report')
+//                                sh "bundle install --path /vendor/bundle"
+//                            }
+//                            post {
+//                                success {
+//                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
+//                                }
+//                            }
+//                        }
                     }
                 }
 
@@ -123,10 +106,14 @@ pipelineJob {
                             }
                             options { skipDefaultCheckout() }
                             steps("Preparing source code & Installing gems") {
-                                unstash('source-code')
-                                unstash('checkstyle')
-                                sh "gem -v"
-                                sh "bundle install --path /vendor/bundle"
+                                throttle(['cucumber_test']) {
+                                    node("throttle") {
+                                        unstash('source-code')
+                                        unstash('checkstyle')
+                                        sh "gem -v"
+                                        sh "bundle install --path /vendor/bundle"
+                                    }
+                                }
                             }
                             post {
                                 success {
