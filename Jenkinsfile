@@ -1,5 +1,5 @@
 def APP_MODULE = "App"
-pipelineJob {
+pipeline {
     agent any
 
     stages {
@@ -18,25 +18,7 @@ pipelineJob {
                         always {
                             archiveArtifacts artifacts: "${APP_MODULE}/target/cucumber-reports/,${APP_MODULE}/target/screenshots/,${APP_MODULE}/target/GitHubReport.json"
                             junit "${APP_MODULE}/target/cucumber-reports/*.xml"
-                            script {
-                                def props = readProperties interpolate: true, file: "${APP_MODULE}/target/cucumber-reports/browser.properties"
-                                cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json",
-                                        sortingMethod: 'ALPHABETICAL',
-                                        classifications: [
-                                                ['key'  : 'Platform',
-                                                 'value': props.Platform
-                                                ],
-                                                ['key'  : 'BrowserName',
-                                                 'value': props.BrowserName
-                                                ],
-                                                ['key'  : 'BrowserVersion',
-                                                 'value': props.BrowserVersion
-                                                ],
-                                                ['key'  : 'Server',
-                                                 'value': props.Server
-                                                ]
-                                        ]
-                            }
+                            cucumber fileIncludePattern: "${APP_MODULE}/target/cucumber-reports/*.json", sortingMethod: 'ALPHABETICAL'
                             stash includes: "${APP_MODULE}/target/GitHubReport.json", name: 'cucumber-report'
                         }
 
@@ -48,31 +30,30 @@ pipelineJob {
                         }
                     }
                 }
-
-//                        stage('Export reports') {
-//                            when {
-//                                not {
-//                                    environment name: 'CHANGE_ID', value: ''
-//                                }
-//                            }
-//                            agent {
-//                                docker {
-//                                    image 'at/reporting:latest'
-//                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
-//                                }
-//                            }
-//                            options { skipDefaultCheckout() }
-//                            steps("Install gems") {
-//                                unstash('source-code')
-//                                unstash('cucumber-report')
-//                                sh "bundle install --path /vendor/bundle"
-//                            }
-//                            post {
-//                                success {
-//                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
-//                                }
-//                            }
-//                        }
+                stage('Export reports') {
+                    when {
+                        not {
+                            environment name: 'CHANGE_ID', value: ''
+                        }
+                    }
+                    agent {
+                        docker {
+                            image 'at/reporting:latest'
+                            args '-v $HOME/vendor/bundle:/vendor/bundle'
+                        }
+                    }
+                    options { skipDefaultCheckout() }
+                    steps("Install gems") {
+                        unstash('source-code')
+                        unstash('cucumber-report')
+                        sh "bundle install --path /vendor/bundle"
+                    }
+                    post {
+                        success {
+                            sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
+                        }
+                    }
+                }
             }
         }
 
@@ -94,7 +75,6 @@ pipelineJob {
                         }
                     }
                 }
-
                 stage('Reporting') {
                     agent {
                         docker {
