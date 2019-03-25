@@ -32,30 +32,30 @@ pipeline {
                                 }
                             }
                         }
-                        stage('Export reports') {
-                            when {
-                                not {
-                                    environment name: 'CHANGE_ID', value: ''
-                                }
-                            }
-                            agent {
-                                docker {
-                                    image 'at/reporting:latest'
-                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
-                                }
-                            }
-                            options { skipDefaultCheckout() }
-                            steps("Install gems") {
-                                unstash('source-code')
-                                unstash('cucumber-report')
-                                sh "bundle install --path /vendor/bundle"
-                            }
-                            post {
-                                success {
-                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
-                                }
-                            }
-                        }
+//                        stage('Export reports') {
+//                            when {
+//                                not {
+//                                    environment name: 'CHANGE_ID', value: ''
+//                                }
+//                            }
+//                            agent {
+//                                docker {
+//                                    image 'at/reporting:latest'
+//                                    args '-v $HOME/vendor/bundle:/vendor/bundle'
+//                                }
+//                            }
+//                            options { skipDefaultCheckout() }
+//                            steps("Install gems") {
+//                                unstash('source-code')
+//                                unstash('cucumber-report')
+//                                sh "bundle install --path /vendor/bundle"
+//                            }
+//                            post {
+//                                success {
+//                                    sh "bundle exec danger --danger_id=cucumber_report --dangerfile=CucumberReport.Dangerfile"
+//                                }
+//                            }
+//                        }
                     }
                 }
 
