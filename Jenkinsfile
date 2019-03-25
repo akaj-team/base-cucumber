@@ -84,14 +84,10 @@ pipeline {
                     }
                     options { skipDefaultCheckout() }
                     steps("Preparing source code & Installing gems") {
-                        throttle(['cucumber_test']) {
-                            node("throttle") {
-                                unstash('source-code')
-                                unstash('checkstyle')
-                                sh "gem -v"
-                                sh "bundle install --path /vendor/bundle"
-                            }
-                        }
+                        unstash('source-code')
+                        unstash('checkstyle')
+                        sh "gem -v"
+                        sh "bundle install --path /vendor/bundle"
                     }
                     post {
                         success {
