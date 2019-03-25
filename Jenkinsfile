@@ -101,5 +101,10 @@ pipeline {
                 }
             }
         }
+        stage("Final") {
+            steps {
+                echo 'Finish'
+            }
+        }
     }
 }
