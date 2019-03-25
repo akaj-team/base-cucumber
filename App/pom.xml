@@ -97,6 +97,28 @@
                     </plugin>
 
                     <plugin>
+                        <groupId>net.masterthought</groupId>
+                        <artifactId>maven-cucumber-reporting</artifactId>
+                        <version>3.19.0</version>
+                        <executions>
+                            <execution>
+                                <id>execution</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
+                                    <jsonFiles>**/*.json</jsonFiles>
+                                    <classificationFiles>**/*.properties</classificationFiles>
+                                    <buildNumber>1</buildNumber>
+                                    <parallelTesting>false</parallelTesting>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven-failsafe-plugin.version}</version>
