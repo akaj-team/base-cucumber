@@ -1,4 +1,3 @@
-
 def APP_MODULE = "App"
 pipeline {
     agent any
@@ -87,10 +86,14 @@ pipeline {
                             }
                             options { skipDefaultCheckout() }
                             steps("Preparing source code & Installing gems") {
-                                unstash('source-code')
-                                unstash('checkstyle')
-                                sh "gem -v"
-                                sh "bundle install --path /vendor/bundle"
+                                throttle(['cucumber_test']) {
+                                    node("throttle") {
+                                        unstash('source-code')
+                                        unstash('checkstyle')
+                                        sh "gem -v"
+                                        sh "bundle install --path /vendor/bundle"
+                                    }
+                                }
                             }
                             post {
                                 success {
