@@ -18,8 +18,3 @@ WORKDIR /tmp
 RUN bundle check || bundle install
 
 WORKDIR $PROJECT
-
-# CMD rsync -a --include /caches --include /wrapper --exclude '/*' ${GRADLE_USER_CACHE}/ ${GRADLE_USER_HOME} || true && \
-#     ./gradlew clean :app:check || exit 1 && \
-#     bundle exec danger && \
-#     rsync -au ${GRADLE_USER_HOME}/caches ${GRADLE_USER_HOME}/wrapper ${GRADLE_USER_CACHE}/ || true
