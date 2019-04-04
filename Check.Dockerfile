@@ -1,6 +1,6 @@
 # Android Dockerfile for check commits
 
-FROM fr/android-env
+FROM at/android-env
 
 # Creating project directories prepared for build when running
 # `docker run`

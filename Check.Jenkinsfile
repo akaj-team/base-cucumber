@@ -5,7 +5,7 @@ pipeline {
         stage('Check') {            
             agent {
                 docker {
-                    image 'fr/android-check'
+                    image 'at/android-check'
                     args  '-v $HOME/.gradle:/.gradle:rw'
                     }
             }          
